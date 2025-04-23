@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mi Aplicación</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <%- include('./partials/header') %>
+
+  <main class="container">
+    <section class="welcome-section">
+      <h1>Bienvenido a Mi Aplicación</h1>
+      <p>Una plataforma para la gestión de empresas</p>
+      
+      <div class="cta-buttons">
+        <a href="/login" class="btn btn-primary">Iniciar Sesión</a>
+        <a href="/register" class="btn btn-secondary">Registrarse</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Mi Aplicación - Todos los derechos reservados</p>
+  </footer>
+
+  <script src="/js/main.js"></script>
+</body>
+</html>

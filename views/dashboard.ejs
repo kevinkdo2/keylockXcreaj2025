@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard | Mi Aplicación</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/dashboard.css">
+</head>
+<body>
+  <%- include('./partials/header') %>
+
+  <main class="container dashboard-container">
+    <div class="dashboard-header">
+      <h1>Bienvenido, <%= user.nombre %></h1>
+      <p>Panel de control de tu empresa</p>
+    </div>
+
+    <div class="dashboard-cards">
+      <div class="card">
+        <h3>Perfil de Empresa</h3>
+        <p>Gestiona la información de tu empresa</p>
+        <a href="/profile" class="btn btn-primary">Ver perfil</a>
+      </div>
+
+      <div class="card">
+        <h3>Configuración</h3>
+        <p>Personaliza tus preferencias</p>
+        <a href="/settings" class="btn btn-primary">Configurar</a>
+      </div>
+
+      <div class="card">
+        <h3>Análisis</h3>
+        <p>Revisa estadísticas y reportes</p>
+        <a href="/analytics" class="btn btn-primary">Ver análisis</a>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Mi Aplicación - Todos los derechos reservados</p>
+  </footer>
+
+  <script src="/js/dashboard.js"></script>
+</body>
+</html>

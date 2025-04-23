@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registrarse | Mi Aplicación</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/auth.css">
+</head>
+<body>
+  <%- include('../partials/header') %>
+
+  <main class="auth-container">
+    <div class="auth-form-container">
+      <div class="tabs">
+        <a href="/register" class="tab active">Registrarse</a>
+        <a href="/login" class="tab">Iniciar Sesión</a>
+      </div>
+      
+      <div class="form-wrapper">
+        <h1>Crear una cuenta</h1>
+        
+        <form action="/register" method="POST" class="auth-form">
+          <div class="form-group">
+            <label for="nombre">Nombre de la Empresa</label>
+            <input 
+              type="text" 
+              id="nombre" 
+              name="nombre" 
+              placeholder="Nombre de tu empresa"
+              value="<%= typeof oldData !== 'undefined' ? oldData.nombre || '' : '' %>"
+              required
+            >
+            <% if (typeof errors !== 'undefined' && errors.find(e => e.param === 'nombre')) { %>
+              <span class="error-message"><%= errors.find(e => e.param === 'nombre').msg %></span>
+            <% } %>
+          </div>
+          
+          <div class="form-group">
+            <label for="correo">Correo Electrónico</label>
+            <input 
+              type="email" 
+              id="correo" 
+              name="correo" 
+              placeholder="correo@ejemplo.com"
+              value="<%= typeof oldData !== 'undefined' ? oldData.correo || '' : '' %>"
+              required
+            >
+            <% if (typeof errors !== 'undefined' && errors.find(e => e.param === 'correo')) { %>
+              <span class="error-message"><%= errors.find(e => e.param === 'correo').msg %></span>
+            <% } %>
+          </div>
+          
+          <div class="form-group">
+            <label for="contrasena">Contraseña</label>
+            <input 
+              type="password" 
+              id="contrasena" 
+              name="contrasena" 
+              placeholder="Crea una contraseña segura"
+              required
+            >
+            <% if (typeof errors !== 'undefined' && errors.find(e => e.param === 'contrasena')) { %>
+              <span class="error-message"><%= errors.find(e => e.param === 'contrasena').msg %></span>
+            <% } %>
+          </div>
+          
+          <div class="form-group">
+            <label for="confirmar_contrasena">Confirmar Contraseña</label>
+            <input 
+              type="password" 
+              id="confirmar_contrasena" 
+              name="confirmar_contrasena" 
+              placeholder="Repite tu contraseña"
+              required
+            >
+            <% if (typeof errors !== 'undefined' && errors.find(e => e.param === 'confirmar_contrasena')) { %>
+              <span class="error-message"><%= errors.find(e => e.param === 'confirmar_contrasena').msg %></span>
+            <% } %>
+          </div>
+          
+          <div class="form-group checkbox">
+            <input type="checkbox" id="terminos" name="terminos" required>
+            <label for="terminos">Acepto los <a href="/terms">términos y condiciones</a></label>
+          </div>
+          
+          <button type="submit" class="btn btn-primary btn-block">Crear Cuenta</button>
+        </form>
+        
+        <div class="form-footer">
+          <p>¿Ya tienes una cuenta? <a href="/login">Inicia sesión</a></p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="/js/auth.js"></script>
+</body>
+</html>

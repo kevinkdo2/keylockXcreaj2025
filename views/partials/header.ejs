@@ -1,0 +1,39 @@
+<header class="main-header">
+    <div class="container">
+      <div class="logo">
+        <a href="/">Mi Aplicación</a>
+      </div>
+      
+      <nav class="main-nav">
+        <ul>
+          <li><a href="/">Inicio</a></li>
+          <% if (user) { %>
+            <li><a href="/dashboard">Dashboard</a></li>
+            <li class="user-info">
+              <span class="user-name"><%= user.nombre %></span>
+              <div class="dropdown-menu">
+                <a href="/profile">Perfil</a>
+                <a href="/settings">Configuración</a>
+                <a href="/logout">Cerrar Sesión</a>
+              </div>
+            </li>
+          <% } else { %>
+            <li><a href="/login">Iniciar Sesión</a></li>
+            <li><a href="/register">Registrarse</a></li>
+          <% } %>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  
+  <% if (typeof success_msg !== 'undefined' && success_msg.length > 0) { %>
+    <div class="alert alert-success"><%= success_msg %></div>
+  <% } %>
+  
+  <% if (typeof error_msg !== 'undefined' && error_msg.length > 0) { %>
+    <div class="alert alert-danger"><%= error_msg %></div>
+  <% } %>
+  
+  <% if (typeof error !== 'undefined' && error.length > 0) { %>
+    <div class="alert alert-danger"><%= error %></div>
+  <% } %>

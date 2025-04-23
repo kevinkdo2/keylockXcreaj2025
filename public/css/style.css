@@ -1,0 +1,264 @@
+/* Reset y estilos básicos */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f8f9fa;
+  }
+  
+  a {
+    text-decoration: none;
+    color: #2563eb;
+  }
+  
+  a:hover {
+    text-decoration: underline;
+  }
+  
+  ul {
+    list-style: none;
+  }
+  
+  .container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+  }
+  
+  /* Header */
+  .main-header {
+    background-color: #fff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 15px 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  
+  .main-header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .logo a {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .main-nav ul {
+    display: flex;
+  }
+  
+  .main-nav li {
+    margin-left: 20px;
+  }
+  
+  .main-nav a {
+    color: #555;
+    font-weight: 500;
+    transition: color 0.3s;
+  }
+  
+  .main-nav a:hover {
+    color: #2563eb;
+    text-decoration: none;
+  }
+  
+  /* Alertas y mensajes */
+  .alert {
+    padding: 15px;
+    margin: 20px 0;
+    border-radius: 6px;
+    text-align: center;
+  }
+  
+  .alert-success {
+    background-color: #d1fae5;
+    color: #065f46;
+    border: 1px solid #10b981;
+  }
+  
+  .alert-danger {
+    background-color: #fee2e2;
+    color: #b91c1c;
+    border: 1px solid #ef4444;
+  }
+  
+  /* Botones */
+  .btn {
+    display: inline-block;
+    padding: 12px 20px;
+    font-size: 1rem;
+    font-weight: 500;
+    text-align: center;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+  }
+  
+  .btn-primary {
+    background-color: #2563eb;
+    color: #fff;
+  }
+  
+  .btn-primary:hover {
+    background-color: #1d4ed8;
+    text-decoration: none;
+  }
+  
+  .btn-secondary {
+    background-color: #e5e7eb;
+    color: #374151;
+  }
+  
+  .btn-secondary:hover {
+    background-color: #d1d5db;
+    text-decoration: none;
+  }
+  
+  .btn-block {
+    display: block;
+    width: 100%;
+  }
+  
+  /* Página principal */
+  .welcome-section {
+    text-align: center;
+    padding: 80px 0;
+  }
+  
+  .welcome-section h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: #1f2937;
+  }
+  
+  .welcome-section p {
+    font-size: 1.2rem;
+    color: #4b5563;
+    margin-bottom: 40px;
+  }
+  
+  .cta-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+  }
+  
+  /* Footer */
+  footer {
+    background-color: #1f2937;
+    color: #fff;
+    text-align: center;
+    padding: 20px 0;
+    margin-top: 50px;
+  }
+
+
+  .main-nav ul {
+    display: flex;
+    align-items: center;
+  }
+  
+  .main-nav li {
+    margin-left: 20px;
+    position: relative;
+  }
+  
+  .main-nav a {
+    color: #555;
+    font-weight: 500;
+    transition: color 0.3s;
+  }
+  
+  .main-nav a:hover {
+    color: #2563eb;
+    text-decoration: none;
+  }
+  
+  /* Estilos para el nombre de usuario y menú desplegable */
+  .user-info {
+    position: relative;
+    cursor: pointer;
+  }
+  
+  .user-name {
+    display: flex;
+    align-items: center;
+    color: #2563eb;
+    font-weight: 600;
+    padding: 8px 15px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+  }
+  
+  .user-name:after {
+    content: '▼';
+    font-size: 10px;
+    margin-left: 8px;
+  }
+  
+  .user-info:hover .user-name {
+    background-color: #f3f4f6;
+  }
+  
+  .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: white;
+    border-radius: 6px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    min-width: 180px;
+    display: none;
+    z-index: 100;
+    overflow: hidden;
+  }
+  
+  .user-info:hover .dropdown-menu {
+    display: block;
+    animation: fadeIn 0.2s ease;
+  }
+  
+  .dropdown-menu a {
+    display: block;
+    padding: 12px 15px;
+    border-bottom: 1px solid #f3f4f6;
+    color: #555;
+    transition: background-color 0.3s;
+  }
+  
+  .dropdown-menu a:hover {
+    background-color: #f9fafb;
+    color: #2563eb;
+  }
+  
+  .dropdown-menu a:last-child {
+    border-bottom: none;
+  }
+  
+  .dropdown-menu a[href="/logout"] {
+    color: #dc2626;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
