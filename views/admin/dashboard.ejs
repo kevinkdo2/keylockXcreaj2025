@@ -1,0 +1,83 @@
+<!-- views/admin/dashboard.ejs -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel de Administración | Mi Aplicación</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/dashboard.css">
+  <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+  <%- include('../partials/header') %>
+
+  <main class="container admin-container">
+    <div class="admin-header">
+      <h1>Panel de Administración</h1>
+      <p>Gestiona todos los aspectos de la plataforma</p>
+    </div>
+
+    <div class="admin-menu">
+      <a href="/admin/dashboard" class="admin-menu-item active">
+        <span class="icon">📊</span>
+        <span>Dashboard</span>
+      </a>
+      <a href="/admin/empresas" class="admin-menu-item">
+        <span class="icon">🏢</span>
+        <span>Empresas</span>
+      </a>
+      <a href="/admin/settings" class="admin-menu-item">
+        <span class="icon">⚙️</span>
+        <span>Configuración</span>
+      </a>
+    </div>
+
+    <div class="admin-content">
+      <div class="admin-stats">
+        <div class="stat-card">
+          <h3>Total Empresas</h3>
+          <p class="stat-number">15</p>
+          <p class="stat-trend positive">+3 este mes</p>
+        </div>
+        
+        <div class="stat-card">
+          <h3>Nuevos Registros</h3>
+          <p class="stat-number">4</p>
+          <p class="stat-trend positive">+2 este mes</p>
+        </div>
+        
+        <div class="stat-card">
+          <h3>Usuarios Activos</h3>
+          <p class="stat-number">12</p>
+          <p class="stat-trend neutral">Sin cambios</p>
+        </div>
+      </div>
+      
+      <div class="recent-activity">
+        <h2>Actividad Reciente</h2>
+        <div class="activity-list">
+          <div class="activity-item">
+            <span class="activity-time">Hoy, 10:30</span>
+            <p>Nueva empresa registrada: <strong>Acme Inc.</strong></p>
+          </div>
+          <div class="activity-item">
+            <span class="activity-time">Ayer, 15:45</span>
+            <p>Empresa actualizada: <strong>Tech Solutions</strong></p>
+          </div>
+          <div class="activity-item">
+            <span class="activity-time">10/04/2025, 09:15</span>
+            <p>Empresa eliminada: <strong>Old Corp</strong></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Mi Aplicación - Todos los derechos reservados</p>
+  </footer>
+
+  <script src="/js/admin.js"></script>
+</body>
+</html>

@@ -7,6 +7,7 @@ require('dotenv').config();
 
 // Importar rutas
 const authRoutes = require('./src/routes/authRoutes');
+const adminRoutes = require('./src/routes/adminRoutes');
 
 // Inicializar app
 const app = express();
@@ -39,6 +40,7 @@ app.use((req, res, next) => {
 
 // Rutas
 app.use('/', authRoutes);
+app.use('/admin', adminRoutes);
 
 // Ruta principal
 app.get('/', (req, res) => {
@@ -47,5 +49,5 @@ app.get('/', (req, res) => {
 
 // Iniciar servidor
 app.listen(PORT, () => {
-  console.log(`Servidor corriendo en el puerto ${PORT}`);
+  console.log(`Servidor corriendo en: http://localhost:${PORT}`);
 });

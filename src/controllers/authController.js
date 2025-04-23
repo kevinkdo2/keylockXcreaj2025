@@ -1,3 +1,5 @@
+// src/controllers/authController.js 
+
 const { validationResult } = require('express-validator');
 const empresaModel = require('../models/empresaModel');
 
@@ -63,7 +65,25 @@ const authController = {
         });
       }
 
-      // Buscar empresa por correo
+      // Comprobar si es el administrador
+      const adminEmail = process.env.ADMIN_EMAIL || 'admin@sistema.com';
+      const adminPassword = process.env.ADMIN_PASSWORD || 'Admin123!';
+      
+      if (req.body.correo === adminEmail && req.body.contrasena === adminPassword) {
+        // Crear sesión de administrador
+        req.session.isAuthenticated = true;
+        req.session.user = {
+          id: 0, // ID especial para admin
+          nombre: 'Administrador',
+          correo: adminEmail,
+          isAdmin: true
+        };
+        
+        req.flash('success_msg', '¡Bienvenido, Administrador!');
+        return res.redirect('/admin/dashboard');
+      }
+
+      // Si no es admin, buscar empresa por correo
       const empresa = await empresaModel.findByEmail(req.body.correo);
       if (!empresa) {
         req.flash('error_msg', 'Correo electrónico o contraseña incorrectos');
@@ -94,7 +114,8 @@ const authController = {
       req.session.user = {
         id: empresa.id,
         nombre: empresa.nombre,
-        correo: empresa.correo
+        correo: empresa.correo,
+        isAdmin: false
       };
 
       req.flash('success_msg', '¡Bienvenido!');

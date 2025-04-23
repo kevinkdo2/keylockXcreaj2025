@@ -1,0 +1,135 @@
+<!-- views/admin/empresas.ejs -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestión de Empresas | Mi Aplicación</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/dashboard.css">
+  <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+  <%- include('../partials/header') %>
+
+  <main class="container admin-container">
+    <div class="admin-header">
+      <h1>Gestión de Empresas</h1>
+      <p>Administra las empresas registradas en la plataforma</p>
+    </div>
+
+    <div class="admin-menu">
+      <!--<a href="/admin/dashboard" class="admin-menu-item">
+        <span class="icon">📊</span>
+        <span>Dashboard</span>
+      </a>-->
+      <a href="/admin/empresas" class="admin-menu-item active">
+        <span class="icon">🏢</span>
+        <span>Empresas</span>
+      </a>
+      <!--<a href="/admin/settings" class="admin-menu-item">
+        <span class="icon">⚙️</span>
+        <span>Configuración</span>
+      </a>-->
+    </div>
+
+    <div class="admin-content">
+      <div class="table-actions">
+        <div class="search-box">
+          <input type="text" id="searchEmpresa" placeholder="Buscar empresa...">
+          <button class="search-button">🔍</button>
+        </div>
+        <a href="/admin/empresas/create" class="btn btn-primary">
+          <span class="icon">+</span> Nueva Empresa
+        </a>
+      </div>
+
+      <div class="table-container">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nombre</th>
+              <th>Correo</th>
+              <th>Fecha de Registro</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% if (empresas && empresas.length > 0) { %>
+              <% empresas.forEach(empresa => { %>
+                <tr>
+                  <td><%= empresa.id %></td>
+                  <td><%= empresa.nombre %></td>
+                  <td><%= empresa.correo %></td>
+                  <td><%= new Date(empresa.creado_en).toLocaleDateString('es-ES') %></td>
+                  <td class="actions">
+                    <a href="/admin/empresas/edit/<%= empresa.id %>" class="btn-action edit" title="Editar">
+                      ✏️
+                    </a>
+                    <a href="#" onclick="confirmDelete('<%= empresa.id %>', '<%= empresa.nombre %>')" class="btn-action delete" title="Eliminar">
+                      🗑️
+                    </a>
+                  </td>
+                </tr>
+              <% }); %>
+            <% } else { %>
+              <tr>
+                <td colspan="5" class="no-data">No hay empresas registradas</td>
+              </tr>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="pagination">
+        <button class="btn-page" disabled>&laquo; Anterior</button>
+        <span class="page-info">Página 1 de 1</span>
+        <button class="btn-page" disabled>Siguiente &raquo;</button>
+      </div>
+    </div>
+  </main>
+
+  <div id="deleteModal" class="modal">
+    <div class="modal-content">
+      <h2>Confirmar Eliminación</h2>
+      <p>¿Estás seguro de que deseas eliminar la empresa <span id="deleteEmpresaName"></span>?</p>
+      <p class="warning">Esta acción no se puede deshacer.</p>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" onclick="closeModal()">Cancelar</button>
+        <a href="#" id="confirmDeleteBtn" class="btn btn-danger">Eliminar</a>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 Mi Aplicación - Todos los derechos reservados</p>
+  </footer>
+
+  <script>
+    function confirmDelete(id, nombre) {
+      const modal = document.getElementById('deleteModal');
+      const nameSpan = document.getElementById('deleteEmpresaName');
+      const confirmBtn = document.getElementById('confirmDeleteBtn');
+      
+      nameSpan.textContent = nombre;
+      confirmBtn.href = `/admin/empresas/delete/${id}`;
+      modal.style.display = 'flex';
+    }
+    
+    function closeModal() {
+      const modal = document.getElementById('deleteModal');
+      modal.style.display = 'none';
+    }
+    
+    // Cerrar modal si se hace clic fuera de él
+    window.onclick = function(event) {
+      const modal = document.getElementById('deleteModal');
+      if (event.target === modal) {
+        closeModal();
+      }
+    }
+  </script>
+  <script src="/js/admin.js"></script>
+</body>
+</html>

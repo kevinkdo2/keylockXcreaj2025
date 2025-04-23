@@ -262,3 +262,98 @@
       transform: translateY(0);
     }
   }
+
+  /* Agregar al archivo public/css/style.css */
+
+/* Estilos para los enlaces de navegación del administrador */
+.nav-item.dropdown {
+  position: relative;
+}
+
+.nav-link.dropdown-toggle {
+  display: flex;
+  align-items: center;
+  color: #555;
+  font-weight: 500;
+  transition: color 0.3s;
+  padding: 8px 12px;
+  border-radius: 4px;
+}
+
+.nav-link.dropdown-toggle:hover {
+  background-color: #f3f4f6;
+  color: #2563eb;
+  text-decoration: none;
+}
+
+.nav-link.dropdown-toggle .icon {
+  margin-right: 6px;
+}
+
+.nav-link.dropdown-toggle:after {
+  content: '▼';
+  font-size: 10px;
+  margin-left: 6px;
+}
+
+/* Panel desplegable sin necesidad de hover */
+.nav-item.dropdown .dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: white;
+  border-radius: 6px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  min-width: 180px;
+  display: none;
+  z-index: 100;
+  overflow: hidden;
+}
+
+.nav-item.dropdown:hover .dropdown-menu {
+  display: block;
+  animation: fadeIn 0.2s ease;
+}
+
+/* Badge de administrador */
+.admin-badge {
+  display: inline-block;
+  background-color: #f59e0b;
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 10px;
+  margin-right: 8px;
+}
+
+/* Botón para ver área de usuario */
+.main-nav a[href="/dashboard"] {
+  display: inline-block;
+  padding: 6px 12px;
+  background-color: #f3f4f6;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.main-nav a[href="/dashboard"]:hover {
+  background-color: #e5e7eb;
+  text-decoration: none;
+}
+
+/* Mejoras responsivas */
+@media (max-width: 768px) {
+  .main-nav ul {
+    flex-wrap: wrap;
+  }
+  
+  .nav-item.dropdown {
+    position: static;
+  }
+  
+  .nav-item.dropdown .dropdown-menu {
+    width: 100%;
+    left: 0;
+    top: 100%;
+  }
+}
