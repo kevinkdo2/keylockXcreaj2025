@@ -1,0 +1,171 @@
+<!-- views/admin/paquete-form.ejs -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %> | Mi Aplicación</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/dashboard.css">
+  <link rel="stylesheet" href="/css/admin.css">
+  <link rel="stylesheet" href="/css/paquetes.css">
+</head>
+<body>
+  <%- include('../partials/header') %>
+
+  <main class="container admin-container">
+    <div class="admin-header">
+      <h1><%= title %></h1>
+      <p>Ingresa los datos del paquete a registrar</p>
+    </div>
+
+    <div class="admin-menu">
+      <a href="/admin/dashboard" class="admin-menu-item">
+        <span class="icon">📊</span>
+        <span>Dashboard</span>
+      </a>
+      <a href="/admin/empresas" class="admin-menu-item">
+        <span class="icon">🏢</span>
+        <span>Empresas</span>
+      </a>
+      <a href="/admin/paquetes" class="admin-menu-item active">
+        <span class="icon">📦</span>
+        <span>Paquetes</span>
+      </a>
+    </div>
+
+    <div class="admin-content">
+      <div class="form-container">
+        <form action="<%= action %>" method="POST" class="admin-form">
+          <div class="form-group">
+            <label for="remitente">Remitente (Quién entrega)</label>
+            <input 
+              type="text" 
+              id="remitente" 
+              name="remitente" 
+              placeholder="Nombre de quien entrega el paquete"
+              value="<%= paquete.remitente || '' %>"
+              required
+            >
+            <% if (typeof errors !== 'undefined' && errors.find(e => e.param === 'remitente')) { %>
+              <span class="error-message"><%= errors.find(e => e.param === 'remitente').msg %></span>
+            <% } %>
+          </div>
+          
+          <div class="form-group">
+            <label for="id_usuario">Destinatario (Para quién es)</label>
+            <select id="id_usuario" name="id_usuario" required>
+              <option value="">Seleccione un usuario</option>
+              <% if (usuarios && usuarios.length > 0) { %>
+                <% usuarios.forEach(usuario => { %>
+                  <option value="<%= usuario.id %>" <%= (paquete.id_usuario == usuario.id) ? 'selected' : '' %>>
+                    <%= usuario.nombre %> (<%= usuario.correo %>)
+                  </option>
+                <% }); %>
+              <% } %>
+            </select>
+            <% if (typeof errors !== 'undefined' && errors.find(e => e.param === 'id_usuario')) { %>
+              <span class="error-message"><%= errors.find(e => e.param === 'id_usuario').msg %></span>
+            <% } %>
+          </div>
+          
+          <div class="form-group">
+            <label for="id_casillero">Casillero</label>
+            <select id="id_casillero" name="id_casillero" required>
+              <option value="">Seleccione un casillero disponible</option>
+              <% if (casilleros && casilleros.length > 0) { %>
+                <% casilleros.forEach(casillero => { %>
+                  <option value="<%= casillero.id %>" 
+                          data-tamano="<%= casillero.tamano %>"
+                          <%= (paquete.id_casillero == casillero.id) ? 'selected' : '' %>>
+                    <%= casillero.ubicacion %> - <%= casillero.tamano %>
+                  </option>
+                <% }); %>
+              <% } else { %>
+                <option value="" disabled>No hay casilleros disponibles</option>
+              <% } %>
+            </select>
+            <% if (typeof errors !== 'undefined' && errors.find(e => e.param === 'id_casillero')) { %>
+              <span class="error-message"><%= errors.find(e => e.param === 'id_casillero').msg %></span>
+            <% } %>
+          </div>
+          
+          <div class="form-group">
+            <label for="tamano">Tamaño del Paquete</label>
+            <select id="tamano" name="tamano" required>
+              <option value="">Seleccione un tamaño</option>
+              <option value="pequeño" <%= (paquete.tamano === 'pequeño') ? 'selected' : '' %>>Pequeño</option>
+              <option value="mediano" <%= (paquete.tamano === 'mediano') ? 'selected' : '' %>>Mediano</option>
+              <option value="grande" <%= (paquete.tamano === 'grande') ? 'selected' : '' %>>Grande</option>
+            </select>
+            <% if (typeof errors !== 'undefined' && errors.find(e => e.param === 'tamano')) { %>
+              <span class="error-message"><%= errors.find(e => e.param === 'tamano').msg %></span>
+            <% } %>
+            <small id="tamanoWarning" class="warning-message" style="display: none;">
+              ¡Atención! El tamaño del paquete puede no ser adecuado para el casillero seleccionado.
+            </small>
+          </div>
+          
+          <div class="form-group">
+            <label for="caracteristicas">Características/Especificaciones (Opcional)</label>
+            <textarea 
+              id="caracteristicas" 
+              name="caracteristicas" 
+              placeholder="Describa las características del paquete"
+              rows="3"
+            ><%= paquete.caracteristicas || '' %></textarea>
+          </div>
+          
+          <div class="form-actions">
+            <a href="/admin/paquetes" class="btn btn-secondary">Cancelar</a>
+            <button type="submit" class="btn btn-primary">Registrar Paquete</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Mi Aplicación - Todos los derechos reservados</p>
+  </footer>
+
+  <script>
+    // Validación para comprobar que el tamaño del paquete sea adecuado para el casillero
+    document.addEventListener('DOMContentLoaded', function() {
+      const tamanoSelect = document.getElementById('tamano');
+      const casilleroSelect = document.getElementById('id_casillero');
+      const tamanoWarning = document.getElementById('tamanoWarning');
+      
+      // Función para verificar compatibilidad
+      function checkTamanoCompatibility() {
+        if (!casilleroSelect.value || !tamanoSelect.value) {
+          tamanoWarning.style.display = 'none';
+          return;
+        }
+        
+        const selectedOption = casilleroSelect.options[casilleroSelect.selectedIndex];
+        const casilleroTamano = selectedOption.getAttribute('data-tamano');
+        const paqueteTamano = tamanoSelect.value;
+        
+        let showWarning = false;
+        
+        // Lógica para mostrar advertencia según incompatibilidad
+        if (casilleroTamano === 'pequeño' && paqueteTamano !== 'pequeño') {
+          showWarning = true;
+        } else if (casilleroTamano === 'mediano' && paqueteTamano === 'grande') {
+          showWarning = true;
+        }
+        
+        tamanoWarning.style.display = showWarning ? 'block' : 'none';
+      }
+      
+      // Asignar eventos
+      tamanoSelect.addEventListener('change', checkTamanoCompatibility);
+      casilleroSelect.addEventListener('change', checkTamanoCompatibility);
+      
+      // Verificar al cargar la página
+      checkTamanoCompatibility();
+    });
+  </script>
+</body>
+</html>

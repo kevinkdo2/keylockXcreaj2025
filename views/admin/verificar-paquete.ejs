@@ -1,0 +1,119 @@
+<!-- views/admin/verificar-paquete.ejs -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Verificación de Paquete | Mi Aplicación</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/dashboard.css">
+  <link rel="stylesheet" href="/css/admin.css">
+  <link rel="stylesheet" href="/css/paquetes.css">
+</head>
+<body>
+  <%- include('../partials/header') %>
+
+  <main class="container admin-container">
+    <div class="admin-header">
+      <h1>Verificación de Paquete</h1>
+      <p>Detalles del paquete verificado</p>
+    </div>
+
+    <div class="admin-menu">
+      <a href="/admin/dashboard" class="admin-menu-item">
+        <span class="icon">📊</span>
+        <span>Dashboard</span>
+      </a>
+      <a href="/admin/empresas" class="admin-menu-item">
+        <span class="icon">🏢</span>
+        <span>Empresas</span>
+      </a>
+      <a href="/admin/paquetes" class="admin-menu-item active">
+        <span class="icon">📦</span>
+        <span>Paquetes</span>
+      </a>
+    </div>
+
+    <div class="admin-content">
+      <div class="verificar-container">
+        <div class="verificar-status">
+          <div class="status-icon <%= paquete.estado === 'pendiente' ? 'valid' : 'invalid' %>">
+            <%= paquete.estado === 'pendiente' ? '✓' : '✗' %>
+          </div>
+          <h2><%= paquete.estado === 'pendiente' ? 'Paquete Válido' : 'Paquete No Disponible' %></h2>
+          <p class="status-message">
+            <% if (paquete.estado === 'pendiente') { %>
+              Este paquete está pendiente de recogida.
+            <% } else if (paquete.estado === 'recogido') { %>
+              Este paquete ya ha sido recogido el <%= new Date(paquete.fecha_recogida).toLocaleString('es-ES') %>.
+            <% } else { %>
+              Este paquete ha sido cancelado.
+            <% } %>
+          </p>
+        </div>
+        
+        <div class="verificar-details">
+          <h3>Detalles del Paquete</h3>
+          <div class="details-grid">
+            <div class="detail-item">
+              <span class="detail-label">Código:</span>
+              <span class="detail-value"><%= paquete.codigo_unico %></span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Destinatario:</span>
+              <span class="detail-value"><%= paquete.nombre_usuario %></span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Remitente:</span>
+              <span class="detail-value"><%= paquete.remitente %></span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Casillero:</span>
+              <span class="detail-value"><%= paquete.ubicacion_casillero %></span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Tamaño:</span>
+              <span class="detail-value"><%= paquete.tamano %></span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Fecha de entrega:</span>
+              <span class="detail-value"><%= new Date(paquete.fecha_entrega).toLocaleString('es-ES') %></span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Estado:</span>
+              <span class="detail-value estado-badge estado-<%= paquete.estado %>">
+                <%= paquete.estado.charAt(0).toUpperCase() + paquete.estado.slice(1) %>
+              </span>
+            </div>
+            <% if (paquete.caracteristicas) { %>
+            <div class="detail-item full-width">
+              <span class="detail-label">Características:</span>
+              <span class="detail-value"><%= paquete.caracteristicas %></span>
+            </div>
+            <% } %>
+          </div>
+        </div>
+        
+        <% if (paquete.estado === 'pendiente') { %>
+        <div class="verificar-actions">
+          <form action="/admin/paquetes/estado/<%= paquete.id %>" method="POST">
+            <input type="hidden" name="estado" value="recogido">
+            <button type="submit" class="btn btn-primary">
+              <span class="icon">✅</span> Marcar como Recogido
+            </button>
+          </form>
+        </div>
+        <% } %>
+        
+        <div class="form-actions centered">
+          <a href="/admin/paquetes" class="btn btn-secondary">Volver a la lista</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Mi Aplicación - Todos los derechos reservados</p>
+  </footer>
+</body>
+</html>

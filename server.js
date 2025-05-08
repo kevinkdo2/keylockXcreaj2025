@@ -3,6 +3,7 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const flash = require('connect-flash');
+const paqueteRoutes = require('./src/routes/paqueteRoutes');
 require('dotenv').config();
 
 // Importar rutas
@@ -46,6 +47,8 @@ app.use('/admin', adminRoutes);
 app.get('/', (req, res) => {
   res.render('index');
 });
+
+app.use('/admin', paqueteRoutes);
 
 // Iniciar servidor
 app.listen(PORT, () => {
