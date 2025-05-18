@@ -8,23 +8,23 @@
  * @returns {string} Código único generado
  */
 function generateUniqueCode() {
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-    const codeLength = 5;
-    let randomCode = '';
-    
-    // Generar parte aleatoria del código
-    for (let i = 0; i < codeLength; i++) {
-      const randomIndex = Math.floor(Math.random() * characters.length);
-      randomCode += characters.charAt(randomIndex);
-    }
-    
-    // Agregar año actual
-    const currentYear = new Date().getFullYear();
-    
-    // Formato final
-    return `PKG-${randomCode}-${currentYear}`;
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  const codeLength = 5;
+  let randomCode = '';
+  
+  // Generar parte aleatoria del código
+  for (let i = 0; i < codeLength; i++) {
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    randomCode += characters.charAt(randomIndex);
   }
   
-  module.exports = {
-    generateUniqueCode
-  };
+  // Agregar año actual
+  const currentYear = new Date().getFullYear();
+  
+  // Formato final
+  return `PKG-${randomCode}-${currentYear}`;
+}
+
+module.exports = {
+  generateUniqueCode
+};

@@ -1,4 +1,4 @@
-// src/models/notificacionModel.js
+// src/models/notificacionModel.js (adaptado a la nueva BD)
 
 const db = require('../config/database');
 

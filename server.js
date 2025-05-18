@@ -1,14 +1,17 @@
+// server.js (actualizado para la BD)
+
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const flash = require('connect-flash');
-const paqueteRoutes = require('./src/routes/paqueteRoutes');
 require('dotenv').config();
 
 // Importar rutas
 const authRoutes = require('./src/routes/authRoutes');
 const adminRoutes = require('./src/routes/adminRoutes');
+const usuarioRoutes = require('./src/routes/usuarioRoutes');
+const paqueteRoutes = require('./src/routes/paqueteRoutes');
 
 // Inicializar app
 const app = express();
@@ -42,13 +45,37 @@ app.use((req, res, next) => {
 // Rutas
 app.use('/', authRoutes);
 app.use('/admin', adminRoutes);
+app.use('/admin', usuarioRoutes);
+app.use('/admin', paqueteRoutes);
 
 // Ruta principal
 app.get('/', (req, res) => {
   res.render('index');
 });
 
-app.use('/admin', paqueteRoutes);
+// Ruta de prueba para verificar funcionamiento
+app.get('/test', (req, res) => {
+  res.send('¡Servidor funcionando correctamente!');
+});
+
+// Manejador de errores 404
+app.use((req, res, next) => {
+  res.status(404).render('error', {
+    message: 'Página no encontrada',
+    error: {status: 404},
+    user: req.session.user
+  });
+});
+
+// Manejador de errores generales
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(err.status || 500).render('error', {
+    message: err.message,
+    error: process.env.NODE_ENV === 'development' ? err : {},
+    user: req.session.user
+  });
+});
 
 // Iniciar servidor
 app.listen(PORT, () => {

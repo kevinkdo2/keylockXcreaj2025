@@ -1,4 +1,4 @@
-// src/controllers/notificacionController.js
+// src/controllers/notificacionController.js (adaptado a la nueva BD)
 
 const notificacionModel = require('../models/notificacionModel');
 

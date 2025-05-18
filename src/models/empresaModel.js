@@ -97,11 +97,6 @@ const empresaModel = {
       console.error('Error al eliminar empresa:', error);
       throw error;
     }
-  },
-
-  // Validar contraseña
-  async validatePassword(password, hashedPassword) {
-    return await bcrypt.compare(password, hashedPassword);
   }
 };
 

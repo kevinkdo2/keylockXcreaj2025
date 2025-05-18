@@ -1,7 +1,8 @@
-// src/controllers/authController.js 
+// src/controllers/authController.js (corregido para permisos de empresa)
 
 const { validationResult } = require('express-validator');
 const empresaModel = require('../models/empresaModel');
+const bcrypt = require('bcryptjs');
 
 const authController = {
   // Mostrar formulario de registro
@@ -76,7 +77,8 @@ const authController = {
           id: 0, // ID especial para admin
           nombre: 'Administrador',
           correo: adminEmail,
-          isAdmin: true
+          isAdmin: true,
+          isEmpresa: false
         };
         
         req.flash('success_msg', '¡Bienvenido, Administrador!');
@@ -95,11 +97,7 @@ const authController = {
       }
 
       // Verificar contraseña
-      const isMatch = await empresaModel.validatePassword(
-        req.body.contrasena, 
-        empresa.contrasena
-      );
-
+      const isMatch = await bcrypt.compare(req.body.contrasena, empresa.contrasena);
       if (!isMatch) {
         req.flash('error_msg', 'Correo electrónico o contraseña incorrectos');
         return res.render('auth/login', {
@@ -109,13 +107,14 @@ const authController = {
         });
       }
 
-      // Crear sesión
+      // Crear sesión para empresa
       req.session.isAuthenticated = true;
       req.session.user = {
         id: empresa.id,
         nombre: empresa.nombre,
         correo: empresa.correo,
-        isAdmin: false
+        isAdmin: false,
+        isEmpresa: true  // Marcamos explícitamente como empresa
       };
 
       req.flash('success_msg', '¡Bienvenido!');

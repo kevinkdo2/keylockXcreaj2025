@@ -1,4 +1,4 @@
-// src/models/paqueteModel.js
+// src/models/paqueteModel.js (adaptado a la nueva BD)
 
 const db = require('../config/database');
 const { generateUniqueCode } = require('../utils/codeGenerator');
@@ -23,8 +23,9 @@ const paqueteModel = {
           id_casillero, 
           tamano, 
           caracteristicas, 
+          estado,
           fecha_entrega
-        ) VALUES (?, ?, ?, ?, ?, ?, NOW())
+        ) VALUES (?, ?, ?, ?, ?, ?, 'pendiente', NOW())
       `;
       
       const result = await db.query(sql, [
@@ -35,6 +36,12 @@ const paqueteModel = {
         paquete.tamano,
         paquete.caracteristicas
       ]);
+      
+      // Registrar en el historial del casillero
+      await casilleroModel.registrarHistorial(
+        paquete.id_casillero, 
+        `Paquete registrado: ${codigoUnico} para usuario ID: ${paquete.id_usuario}`
+      );
       
       // Devolver objeto con id y código único generado
       return {
@@ -54,7 +61,7 @@ const paqueteModel = {
         SELECT p.*, 
                u.nombre AS nombre_usuario, 
                c.ubicacion AS ubicacion_casillero,
-               c.tamano AS tamano_casillero 
+               c.tamanio AS tamano_casillero 
         FROM paquete p
         JOIN usuario u ON p.id_usuario = u.id
         JOIN casillero c ON p.id_casillero = c.id
@@ -74,12 +81,11 @@ const paqueteModel = {
         SELECT p.*, 
                u.nombre AS nombre_usuario, 
                c.ubicacion AS ubicacion_casillero,
-               c.tamano AS tamano_casillero 
+               c.tamanio AS tamano_casillero 
         FROM paquete p
         JOIN usuario u ON p.id_usuario = u.id
         JOIN casillero c ON p.id_casillero = c.id
-        JOIN empresa e ON u.id_empresa = e.id
-        WHERE e.id = ?
+        WHERE u.id_empresa = ?
         ORDER BY p.fecha_entrega DESC
       `;
       return await db.query(sql, [empresaId]);
@@ -95,7 +101,7 @@ const paqueteModel = {
       const sql = `
         SELECT p.*, 
                c.ubicacion AS ubicacion_casillero,
-               c.tamano AS tamano_casillero 
+               c.tamanio AS tamano_casillero 
         FROM paquete p
         JOIN casillero c ON p.id_casillero = c.id
         WHERE p.id_usuario = ?
@@ -115,7 +121,7 @@ const paqueteModel = {
         SELECT p.*, 
                u.nombre AS nombre_usuario, 
                c.ubicacion AS ubicacion_casillero,
-               c.tamano AS tamano_casillero 
+               c.tamanio AS tamano_casillero 
         FROM paquete p
         JOIN usuario u ON p.id_usuario = u.id
         JOIN casillero c ON p.id_casillero = c.id
@@ -136,7 +142,7 @@ const paqueteModel = {
         SELECT p.*, 
                u.nombre AS nombre_usuario, 
                c.ubicacion AS ubicacion_casillero,
-               c.tamano AS tamano_casillero 
+               c.tamanio AS tamano_casillero 
         FROM paquete p
         JOIN usuario u ON p.id_usuario = u.id
         JOIN casillero c ON p.id_casillero = c.id
@@ -164,6 +170,12 @@ const paqueteModel = {
         const paquete = await this.findById(id);
         if (paquete) {
           await casilleroModel.updateEstado(paquete.id_casillero, 'disponible');
+          
+          // Registrar en el historial del casillero
+          await casilleroModel.registrarHistorial(
+            paquete.id_casillero, 
+            `Paquete ${paquete.codigo_unico} recogido`
+          );
         }
       }
       
@@ -186,6 +198,12 @@ const paqueteModel = {
       // Liberar el casillero si el paquete no ha sido recogido
       if (paquete.estado !== 'recogido') {
         await casilleroModel.updateEstado(paquete.id_casillero, 'disponible');
+        
+        // Registrar en el historial del casillero
+        await casilleroModel.registrarHistorial(
+          paquete.id_casillero, 
+          `Paquete ${paquete.codigo_unico} eliminado del sistema`
+        );
       }
       
       // Eliminar el paquete

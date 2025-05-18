@@ -1,4 +1,3 @@
-<!-- views/admin/dashboard.ejs -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -27,6 +26,14 @@
         <span class="icon">🏢</span>
         <span>Empresas</span>
       </a>
+      <a href="/admin/usuarios" class="admin-menu-item">
+        <span class="icon">👤</span>
+        <span>Usuarios</span>
+      </a>
+      <a href="/admin/paquetes" class="admin-menu-item">
+        <span class="icon">📦</span>
+        <span>Paquetes</span>
+      </a>
       <a href="/admin/settings" class="admin-menu-item">
         <span class="icon">⚙️</span>
         <span>Configuración</span>
@@ -42,15 +49,15 @@
         </div>
         
         <div class="stat-card">
-          <h3>Nuevos Registros</h3>
-          <p class="stat-number">4</p>
-          <p class="stat-trend positive">+2 este mes</p>
+          <h3>Total Usuarios</h3>
+          <p class="stat-number">45</p>
+          <p class="stat-trend positive">+8 este mes</p>
         </div>
         
         <div class="stat-card">
-          <h3>Usuarios Activos</h3>
-          <p class="stat-number">12</p>
-          <p class="stat-trend neutral">Sin cambios</p>
+          <h3>Paquetes Activos</h3>
+          <p class="stat-number">27</p>
+          <p class="stat-trend positive">+12 este mes</p>
         </div>
       </div>
       
@@ -62,12 +69,16 @@
             <p>Nueva empresa registrada: <strong>Acme Inc.</strong></p>
           </div>
           <div class="activity-item">
+            <span class="activity-time">Hoy, 09:15</span>
+            <p>Nuevo usuario creado: <strong>Juan Pérez</strong></p>
+          </div>
+          <div class="activity-item">
             <span class="activity-time">Ayer, 15:45</span>
             <p>Empresa actualizada: <strong>Tech Solutions</strong></p>
           </div>
           <div class="activity-item">
             <span class="activity-time">10/04/2025, 09:15</span>
-            <p>Empresa eliminada: <strong>Old Corp</strong></p>
+            <p>Paquete entregado: <strong>PKG-45XA2</strong></p>
           </div>
         </div>
       </div>

@@ -1,4 +1,4 @@
-// src/models/casilleroModel.js
+// src/models/casilleroModel.js (adaptado a la nueva BD)
 
 const db = require('../config/database');
 
@@ -40,8 +40,19 @@ const casilleroModel = {
   // Actualizar estado de casillero
   async updateEstado(id, estado) {
     try {
+      // Validar que el estado sea válido según el ENUM
+      if (!['disponible', 'proximo_lleno', 'ocupado', 'mantenimiento'].includes(estado)) {
+        throw new Error('Estado de casillero no válido');
+      }
+      
       const sql = 'UPDATE casillero SET estado = ? WHERE id = ?';
       const result = await db.query(sql, [estado, id]);
+      
+      // Registrar en el historial si se realiza el cambio
+      if (result.affectedRows > 0) {
+        await this.registrarHistorial(id, `Cambio de estado a: ${estado}`);
+      }
+      
       return result.affectedRows > 0;
     } catch (error) {
       console.error('Error al actualizar estado del casillero:', error);
@@ -49,19 +60,68 @@ const casilleroModel = {
     }
   },
   
+  // Registrar en el historial de uso
+  async registrarHistorial(id, mensaje) {
+    try {
+      // Primero obtenemos el casillero para ver su historial actual
+      const casillero = await this.findById(id);
+      if (!casillero) return false;
+      
+      // Crear nuevo registro para el historial
+      const fecha = new Date().toISOString();
+      const nuevoRegistro = `${fecha}: ${mensaje}`;
+      
+      // Actualizar el historial (concatenar con el existente o crear nuevo)
+      let historial = casillero.historial_uso || '';
+      if (historial) {
+        historial += '\n';
+      }
+      historial += nuevoRegistro;
+      
+      const sql = 'UPDATE casillero SET historial_uso = ? WHERE id = ?';
+      const result = await db.query(sql, [historial, id]);
+      return result.affectedRows > 0;
+    } catch (error) {
+      console.error('Error al registrar historial:', error);
+      // No lanzamos el error para no interrumpir la operación principal
+      return false;
+    }
+  },
+  
   // Crear un nuevo casillero
   async create(casillero) {
     try {
+      // Convertir características a JSON si no lo está ya
+      let caracteristicasJSON;
+      if (typeof casillero.caracteristicas === 'string') {
+        try {
+          // Verificar si es una cadena JSON válida
+          JSON.parse(casillero.caracteristicas);
+          caracteristicasJSON = casillero.caracteristicas;
+        } catch (e) {
+          // Si no es JSON válido, convertirlo a un objeto JSON
+          caracteristicasJSON = JSON.stringify({ descripcion: casillero.caracteristicas });
+        }
+      } else if (typeof casillero.caracteristicas === 'object') {
+        caracteristicasJSON = JSON.stringify(casillero.caracteristicas);
+      } else {
+        caracteristicasJSON = null;
+      }
+      
       const sql = `
-        INSERT INTO casillero (ubicacion, tamano, caracteristicas, estado) 
-        VALUES (?, ?, ?, ?)
+        INSERT INTO casillero (ubicacion, tamanio, caracteristicas, estado, historial_uso) 
+        VALUES (?, ?, ?, ?, ?)
       `;
+      
+      // Registrar creación en historial
+      const historialInicial = `${new Date().toISOString()}: Casillero creado`;
       
       const result = await db.query(sql, [
         casillero.ubicacion,
-        casillero.tamano,
-        casillero.caracteristicas,
-        casillero.estado || 'disponible'
+        casillero.tamanio, // Usamos tamanio según la BD
+        caracteristicasJSON,
+        casillero.estado || 'disponible',
+        historialInicial
       ]);
       
       return result.insertId;
@@ -74,16 +134,36 @@ const casilleroModel = {
   // Actualizar casillero
   async update(id, casillero) {
     try {
+      // Convertir características a JSON si no lo está ya
+      let caracteristicasJSON;
+      if (typeof casillero.caracteristicas === 'string') {
+        try {
+          // Verificar si es una cadena JSON válida
+          JSON.parse(casillero.caracteristicas);
+          caracteristicasJSON = casillero.caracteristicas;
+        } catch (e) {
+          // Si no es JSON válido, convertirlo a un objeto JSON
+          caracteristicasJSON = JSON.stringify({ descripcion: casillero.caracteristicas });
+        }
+      } else if (typeof casillero.caracteristicas === 'object') {
+        caracteristicasJSON = JSON.stringify(casillero.caracteristicas);
+      } else {
+        caracteristicasJSON = null;
+      }
+      
       const sql = `
         UPDATE casillero 
-        SET ubicacion = ?, tamano = ?, caracteristicas = ?, estado = ? 
+        SET ubicacion = ?, tamanio = ?, caracteristicas = ?, estado = ? 
         WHERE id = ?
       `;
       
+      // Registrar actualización en historial
+      await this.registrarHistorial(id, 'Casillero actualizado');
+      
       const result = await db.query(sql, [
         casillero.ubicacion,
-        casillero.tamano,
-        casillero.caracteristicas,
+        casillero.tamanio, // Usamos tamanio según la BD
+        caracteristicasJSON,
         casillero.estado,
         id
       ]);

@@ -1,4 +1,4 @@
-// src/controllers/paqueteController.js
+// src/controllers/paqueteController.js (adaptado a la nueva BD)
 
 const paqueteModel = require('../models/paqueteModel');
 const notificacionModel = require('../models/notificacionModel');
@@ -6,8 +6,6 @@ const casilleroModel = require('../models/casilleroModel');
 const usuarioModel = require('../models/usuarioModel');
 const { generateQRToDataURL } = require('../utils/qrGenerator');
 const { validationResult } = require('express-validator');
-const path = require('path');
-const fs = require('fs');
 
 const paqueteController = {
   // Mostrar lista de paquetes
@@ -17,11 +15,13 @@ const paqueteController = {
       // Determinar si mostrar todos los paquetes o solo los de una empresa específica
       if (req.session.user.isAdmin) {
         paquetes = await paqueteModel.getAll();
-      } else {
+      } else if (req.session.user.isEmpresa) {
+        // Si es una empresa, mostrar los paquetes de sus usuarios
         paquetes = await paqueteModel.getByEmpresaId(req.session.user.id);
       }
       
       res.render('admin/paquetes', {
+        title: 'Gestión de Paquetes',
         paquetes,
         user: req.session.user
       });
@@ -39,7 +39,14 @@ const paqueteController = {
       const casilleros = await casilleroModel.getDisponibles();
       
       // Obtener usuarios para el select
-      const usuarios = await usuarioModel.getAll();
+      let usuarios;
+      if (req.session.user.isAdmin) {
+        // Si es admin, mostrar todos los usuarios
+        usuarios = await usuarioModel.getAll();
+      } else if (req.session.user.isEmpresa) {
+        // Si es empresa, mostrar solo sus usuarios
+        usuarios = await usuarioModel.getByEmpresaId(req.session.user.id);
+      }
       
       res.render('admin/paquete-form', {
         title: 'Registrar Paquete',
@@ -64,7 +71,12 @@ const paqueteController = {
       if (!errors.isEmpty()) {
         // Obtener casilleros y usuarios para volver a renderizar el formulario
         const casilleros = await casilleroModel.getDisponibles();
-        const usuarios = await usuarioModel.getAll();
+        let usuarios;
+        if (req.session.user.isAdmin) {
+          usuarios = await usuarioModel.getAll();
+        } else if (req.session.user.isEmpresa) {
+          usuarios = await usuarioModel.getByEmpresaId(req.session.user.id);
+        }
         
         return res.status(400).render('admin/paquete-form', {
           title: 'Registrar Paquete',
@@ -89,6 +101,12 @@ const paqueteController = {
       if (!usuario) {
         req.flash('error_msg', 'El usuario seleccionado no existe');
         return res.redirect('/admin/paquetes/create');
+      }
+
+      // Si es empresa, verificar que el usuario pertenezca a ella
+      if (req.session.user.isEmpresa && usuario.id_empresa !== req.session.user.id) {
+        req.flash('error_msg', 'No tiene permisos para registrar paquetes para este usuario');
+        return res.redirect('/admin/paquetes');
       }
 
       // Crear nuevo paquete
@@ -128,10 +146,20 @@ const paqueteController = {
         return res.redirect('/admin/paquetes');
       }
       
+      // Verificar permisos
+      if (!req.session.user.isAdmin && req.session.user.isEmpresa) {
+        const usuario = await usuarioModel.findById(paquete.id_usuario);
+        if (usuario.id_empresa !== req.session.user.id) {
+          req.flash('error_msg', 'No tiene permisos para ver este paquete');
+          return res.redirect('/admin/paquetes');
+        }
+      }
+      
       // Generar QR con el código único
       const qrDataURL = await generateQRToDataURL(paquete.codigo_unico);
       
       res.render('admin/paquete-qr', {
+        title: 'Código QR del Paquete',
         paquete,
         qrDataURL,
         user: req.session.user
@@ -154,6 +182,15 @@ const paqueteController = {
       if (!paquete) {
         req.flash('error_msg', 'Paquete no encontrado');
         return res.redirect('/admin/paquetes');
+      }
+      
+      // Verificar permisos
+      if (!req.session.user.isAdmin && req.session.user.isEmpresa) {
+        const usuario = await usuarioModel.findById(paquete.id_usuario);
+        if (usuario.id_empresa !== req.session.user.id) {
+          req.flash('error_msg', 'No tiene permisos para modificar este paquete');
+          return res.redirect('/admin/paquetes');
+        }
       }
       
       // Actualizar estado
@@ -204,6 +241,15 @@ const paqueteController = {
         return res.redirect('/admin/paquetes');
       }
       
+      // Verificar permisos
+      if (!req.session.user.isAdmin && req.session.user.isEmpresa) {
+        const usuario = await usuarioModel.findById(paquete.id_usuario);
+        if (usuario.id_empresa !== req.session.user.id) {
+          req.flash('error_msg', 'No tiene permisos para eliminar este paquete');
+          return res.redirect('/admin/paquetes');
+        }
+      }
+      
       // Eliminar notificaciones asociadas al paquete
       await notificacionModel.deleteByPaqueteId(id);
       
@@ -237,6 +283,15 @@ const paqueteController = {
         return res.redirect('/admin/paquetes');
       }
       
+      // Verificar permisos
+      if (!req.session.user.isAdmin && req.session.user.isEmpresa) {
+        const usuario = await usuarioModel.findById(paquete.id_usuario);
+        if (usuario.id_empresa !== req.session.user.id) {
+          req.flash('error_msg', 'No tiene permisos para ver este paquete');
+          return res.redirect('/admin/paquetes');
+        }
+      }
+      
       // Si el paquete ya fue recogido
       if (paquete.estado === 'recogido') {
         req.flash('error_msg', 'Este paquete ya ha sido recogido');
@@ -244,6 +299,7 @@ const paqueteController = {
       }
       
       res.render('admin/verificar-paquete', {
+        title: 'Verificación de Paquete',
         paquete,
         user: req.session.user
       });
@@ -254,3 +310,5 @@ const paqueteController = {
     }
   }
 };
+
+module.exports = paqueteController;

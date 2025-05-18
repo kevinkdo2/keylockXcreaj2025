@@ -1,4 +1,4 @@
-<!-- views/partials/header.ejs (modificado) -->
+<!-- views/partials/header.ejs (actualizado) -->
 
 <header class="main-header">
   <div class="container">
@@ -18,14 +18,18 @@
                 <span class="icon">🔧</span> Administración
               </a>
               <div class="dropdown-menu">
+                <a href="/admin/dashboard">Dashboard</a>
                 <a href="/admin/empresas">Gestión de Empresas</a>
-                
+                <a href="/admin/usuarios">Gestión de Usuarios</a>
+                <a href="/admin/paquetes">Gestión de Paquetes</a>
               </div>
             </li>
             <!-- Enlace al área de usuario normal -->
             <li><a href="/dashboard">Ver Área de Usuario</a></li>
           <% } else { %>
             <li><a href="/dashboard">Dashboard</a></li>
+            <li><a href="/admin/usuarios">Mis Usuarios</a></li>
+            <li><a href="/admin/paquetes">Mis Paquetes</a></li>
           <% } %>
           
           <li class="user-info">

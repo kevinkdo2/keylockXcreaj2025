@@ -1,12 +1,11 @@
-// src/routes/paqueteRoutes.js
+// src/routes/paqueteRoutes.js (corregido)
 
 const express = require('express');
 const router = express.Router();
 const { check } = require('express-validator');
 const paqueteController = require('../controllers/paqueteController');
 const notificacionController = require('../controllers/notificacionController');
-const { isAdmin } = require('../middlewares/adminMiddleware');
-const { isAuthenticated } = require('../middlewares/authMiddleware');
+const { isAuthenticated, isEmpresaOrAdmin } = require('../middlewares/authMiddleware');
 
 // Validaciones para paquetes
 const paqueteValidations = [
@@ -23,22 +22,19 @@ const paqueteValidations = [
     .notEmpty().withMessage('El tamaño es obligatorio')
 ];
 
-// Rutas para la gestión de paquetes (requieren autenticación)
-router.use(isAuthenticated);
-
-// Rutas principales de paquetes
-router.get('/paquetes', paqueteController.index);
-router.get('/paquetes/create', paqueteController.showCreateForm);
-router.post('/paquetes/create', paqueteValidations, paqueteController.create);
-router.get('/paquetes/qr/:id', paqueteController.showQR);
-router.post('/paquetes/estado/:id', paqueteController.updateEstado);
-router.get('/paquetes/delete/:id', paqueteController.delete);
-router.post('/paquetes/verificar', paqueteController.verificar);
+// Rutas principales de paquetes - Todas accesibles para empresas y admins
+router.get('/paquetes', isEmpresaOrAdmin, paqueteController.index);
+router.get('/paquetes/create', isEmpresaOrAdmin, paqueteController.showCreateForm);
+router.post('/paquetes/create', isEmpresaOrAdmin, paqueteValidations, paqueteController.create);
+router.get('/paquetes/qr/:id', isEmpresaOrAdmin, paqueteController.showQR);
+router.post('/paquetes/estado/:id', isEmpresaOrAdmin, paqueteController.updateEstado);
+router.get('/paquetes/delete/:id', isEmpresaOrAdmin, paqueteController.delete);
+router.post('/paquetes/verificar', isEmpresaOrAdmin, paqueteController.verificar);
 
 // API de notificaciones (para usar desde la app móvil)
-router.get('/api/notificaciones/:usuarioId', notificacionController.getNotificaciones);
-router.get('/api/notificaciones/:usuarioId/noleidas', notificacionController.getNoLeidas);
-router.put('/api/notificaciones/:id/leer', notificacionController.marcarLeida);
-router.put('/api/notificaciones/:usuarioId/leertodas', notificacionController.marcarTodasLeidas);
+router.get('/api/notificaciones/:usuarioId', isAuthenticated, notificacionController.getNotificaciones);
+router.get('/api/notificaciones/:usuarioId/noleidas', isAuthenticated, notificacionController.getNoLeidas);
+router.put('/api/notificaciones/:id/leer', isAuthenticated, notificacionController.marcarLeida);
+router.put('/api/notificaciones/:usuarioId/leertodas', isAuthenticated, notificacionController.marcarTodasLeidas);
 
 module.exports = router;
