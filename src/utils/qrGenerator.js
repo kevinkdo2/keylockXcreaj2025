@@ -1,9 +1,6 @@
 // src/utils/qrGenerator.js
 
-/**
- * Este archivo utiliza la librería 'qrcode' para generar códigos QR
- * Asegúrate de instalar la dependencia: npm install qrcode
- */
+
 
 const QRCode = require('qrcode');
 

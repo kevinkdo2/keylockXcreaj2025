@@ -1,10 +1,10 @@
-// server.js (actualizado para la BD)
-
+// server.js (actualizado para incluir rutas móviles)
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const flash = require('connect-flash');
+const cors = require('cors'); // Añadido para permitir peticiones desde la app móvil
 require('dotenv').config();
 
 // Importar rutas
@@ -12,16 +12,23 @@ const authRoutes = require('./src/routes/authRoutes');
 const adminRoutes = require('./src/routes/adminRoutes');
 const usuarioRoutes = require('./src/routes/usuarioRoutes');
 const paqueteRoutes = require('./src/routes/paqueteRoutes');
+const mobileRoutes = require('./src/routes/mobileRoutes'); // Importar rutas móviles
 
 // Inicializar app
 const app = express();
 const PORT = process.env.PORT || 3000;
-
+ 
 // Configurar motor de vistas
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
 // Middlewares
+app.use(cors({
+  origin: '*',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+})); // Configuración más permisiva de CORS
+
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -48,6 +55,9 @@ app.use('/admin', adminRoutes);
 app.use('/admin', usuarioRoutes);
 app.use('/admin', paqueteRoutes);
 
+// Rutas para la app móvil
+app.use('/api/mobile', mobileRoutes);
+
 // Ruta principal
 app.get('/', (req, res) => {
   res.render('index');
@@ -58,8 +68,22 @@ app.get('/test', (req, res) => {
   res.send('¡Servidor funcionando correctamente!');
 });
 
+// Ruta de prueba para verificar API móvil
+app.get('/api/test', (req, res) => {
+  res.json({ status: 'success', message: 'API móvil funcionando correctamente' });
+});
+
 // Manejador de errores 404
 app.use((req, res, next) => {
+  // Para peticiones API, devolver JSON
+  if (req.path.startsWith('/api/')) {
+    return res.status(404).json({ 
+      status: 'error', 
+      message: 'Endpoint no encontrado' 
+    });
+  }
+  
+  // Para peticiones web, renderizar vista de error
   res.status(404).render('error', {
     message: 'Página no encontrada',
     error: {status: 404},
@@ -70,6 +94,17 @@ app.use((req, res, next) => {
 // Manejador de errores generales
 app.use((err, req, res, next) => {
   console.error(err.stack);
+  
+  // Para peticiones API, devolver JSON
+  if (req.path.startsWith('/api/')) {
+    return res.status(err.status || 500).json({ 
+      status: 'error', 
+      message: err.message,
+      details: process.env.NODE_ENV === 'development' ? err : {}
+    });
+  }
+  
+  // Para peticiones web, renderizar vista de error
   res.status(err.status || 500).render('error', {
     message: err.message,
     error: process.env.NODE_ENV === 'development' ? err : {},
@@ -77,7 +112,8 @@ app.use((err, req, res, next) => {
   });
 });
 
-// Iniciar servidor
-app.listen(PORT, () => {
+// Iniciar servidor - MODIFICADO para escuchar en todas las interfaces
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`Servidor corriendo en: http://localhost:${PORT}`);
+  console.log(`API móvil disponible en: http://localhost:${PORT}/api/mobile`);
 });
