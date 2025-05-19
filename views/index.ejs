@@ -4,22 +4,152 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mi Aplicación</title>
-  <link rel="stylesheet" href="/css/style.css">
+  <link href="/css/output.css" rel="stylesheet">
+
+
 </head>
-<body>
+<body class="bg-gray-200">
   <%- include('./partials/header') %>
 
-  <main class="container">
-    <section class="welcome-section">
-      <h1>Bienvenido a Mi Aplicación</h1>
-      <p>Una plataforma para la gestión de empresas</p>
-      
-      <div class="cta-buttons">
-        <a href="/login" class="btn btn-primary">Iniciar Sesión</a>
-        <a href="/register" class="btn btn-secondary">Registrarse</a>
+
+
+  <!-- Hero Section -->
+   
+  <div class="bg-white flex items-center justify-center w-screen h-screen p-0">
+    <div class="relative bg-white w-full h-full overflow-hidden">
+      <!-- SVG circles -->
+      <svg class="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 1200 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="600" cy="300" r="380" stroke="#d9d9d9" stroke-width="3" opacity="0.3"/>
+        <circle cx="600" cy="300" r="280" stroke="#d9d9d9" stroke-width="3" opacity="0.3"/>
+        <circle cx="600" cy="300" r="180" stroke="#d9d9d9" stroke-width="3" opacity="0.3"/>
+      </svg>
+      <!-- Main content -->
+      <div class="relative z-10 flex flex-col md:flex-row items-center justify-between h-full p-8 md:p-16 md:mt-8"> 
+        <!-- Left text -->
+        <div class="flex-1 flex justify-center md:justify-start">
+          <p class="text-gray-900 text-lg md:text-xl font-normal max-w-[220px] leading-snug select-none">
+            The ultimate shopping<br />hack is here.
+          </p>
+        </div>
+        <!-- Center - Phone Image -->
+        <div class="flex-1 flex flex-col items-center justify-center relative h-full">
+          <h1 class="text-gray-900 font-semibold text-[1.5rem] md:text-[3.5rem] leading-[1.05] select-none">
+            Bienvenido a<br />
+            <span class="text-azuloscuro">KeyLock</span>
+          </h1>
+          <div aria-hidden="true" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 md:w-96 h-64 md:h-96 rounded-full bg-white"></div>
+          <div class="flex items-center justify-center h-full">
+            <img src="/images/landingpagephone.png" alt="Phone app image" class="relative z-10 w-auto h-4/5 max-h-full object-contain" />
+          </div>
+        </div> 
+        <!-- Right -->
+        <div class="flex-1 flex flex-col items-center md:items-end max-w-sm space-y-8">
+          <p class="text-gray-500 text-lg md:text-2xl font-normal text-center md:text-right leading-relaxed select-none">
+            Adiós a las molestias de paquetería.
+          </p>
+          <div class="flex gap-6">
+            <a href="#" class="bg-gray-900 text-white text-xs md:text-sm font-normal rounded-full px-5 py-2.5 flex items-center gap-2 hover:brightness-110 transition select-none">
+              <i class="fab fa-apple text-xl"></i><span>App Store</span>
+            </a>
+            <a href="#" class="bg-gray-900 text-white text-xs md:text-sm font-normal rounded-full px-5 py-2.5 flex items-center gap-2 hover:brightness-110 transition select-none">
+              <i class="fab fa-google-play text-xl"></i><span>Google Play</span>
+            </a>
+          </div>
+        </div>
       </div>
-    </section>
-  </main>
+    </div>
+</div>
+  <!-- Hero Section -->
+  
+
+ 
+
+<div class=" p-w-full justify-center flex ">
+  <div class="bg-white p-6 border-b border-gray-300 w-4/5 max-w-none">
+    <div class="max-w-6xl w-full mx-auto">
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 sm:mb-12">
+      <div>
+        <h2 class="text-black text-2xl sm:text-3xl font-semibold">Nuestros <span class="text-azuloscuro">Servicios</span></h2>
+      </div>
+      <div class="mt-4 sm:mt-0">
+          <button class="group flex items-center rounded-full bg-white shadow-lg focus:outline-none">
+            <!-- Barra verde con texto -->
+            <div class="bg-azulclaro px-4 py-2 rounded-r-full rounded-l-full transition-all duration-300 ease group-hover:mr-3">
+              <span class="text-sm sm:text-base font-semibold text-gray-800">Ve más información aquí</span>
+            </div>
+            <!-- Círculo morado con flecha -->
+            <a href="#"><div class="w-10 h-10 bg-azuloscuro flex items-center justify-center rounded-full transition-all duration-300 ease group-hover:ml-3">
+              <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-7-7l7 7-7 7"/>
+              </svg>
+            </div></a>
+          </button>
+      </div>
+    </div>
+    
+    <div class="grid grid-cols-1 sm:grid-cols-2  lg:grid-cols-3 gap-12 sm:gap-6">
+      <div class="relative mt-10">
+        <div class="w-full aspect-square bg-azuloscuro bg-opacity-70 rounded-full flex flex-col items-center justify-center p-6">
+          <!-- Icon Container -->
+          <div class="absolute -top-12 left-1/2 transform -translate-x-1/2 w-24 h-24 rounded-full bg-azuloscuro bg-opacity-40 flex items-center justify-center">
+            <div class="w-12 h-12 rounded-full bg-azuloscuro flex items-center justify-center">
+              <span class="text-white text-xs font-bold">UX</span>
+            </div>
+          </div>
+          <div class="mt-10 text-center">
+            <h3 class="text-xl font-semibold text-gray-800 mb-2">UI/UX Design</h3>
+            <p class="text-white text-sm mb-4 px-4">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            </p>
+          </div>
+        </div>
+      </div>
+      
+     <div class="relative mt-10">
+        <div class="w-full aspect-square bg-azuloscuro bg-opacity-70 rounded-full flex flex-col items-center justify-center p-6">
+          <!-- Icon Container -->
+          <div class="absolute -top-12 left-1/2 transform -translate-x-1/2 w-24 h-24 rounded-full bg-azuloscuro bg-opacity-40 flex items-center justify-center">
+            <div class="w-12 h-12 rounded-full bg-azuloscuro flex items-center justify-center">
+              <span class="text-white text-xs font-bold">UX</span>
+            </div>
+          </div>
+          <div class="mt-10 text-center">
+            <h3 class="text-xl font-semibold text-gray-800 mb-2">UI/UX Design</h3>
+            <p class="text-white text-sm mb-4 px-4">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            </p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="relative mt-10">
+        <div class="w-full aspect-square bg-azuloscuro bg-opacity-70 rounded-full flex flex-col items-center justify-center p-6">
+          <!-- Icon Container -->
+          <div class="absolute -top-12 left-1/2 transform -translate-x-1/2 w-24 h-24 rounded-full bg-azuloscuro bg-opacity-40 flex items-center justify-center">
+            <div class="w-12 h-12 rounded-full bg-azuloscuro flex items-center justify-center">
+              <span class="text-white text-xs font-bold">UX</span>
+            </div>
+          </div>
+          <div class="mt-10 text-center">
+            <h3 class="text-xl font-semibold text-gray-800 mb-2">UI/UX Design</h3>
+            <p class="text-white text-sm mb-4 px-4">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  </div>
+</div>
+
+
+  
+           
+  
+ 
+
 
   <footer>
     <p>&copy; 2025 Mi Aplicación - Todos los derechos reservados</p>
