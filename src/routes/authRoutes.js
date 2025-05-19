@@ -61,5 +61,9 @@ router.get('/dashboard', isAuthenticated, (req, res) => {
   router.get('/', (req, res) => {
     res.render('index');
   });
+
+  router.get('/info', (req, res) => {
+    res.render('info', { user: req.session.user });
+  });
   
   module.exports = router;
