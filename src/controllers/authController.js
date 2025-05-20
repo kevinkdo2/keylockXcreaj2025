@@ -1,4 +1,4 @@
-// src/controllers/authController.js (corregido para permisos de empresa)
+// controladores de empresa registro 
 
 const { validationResult } = require('express-validator');
 const empresaModel = require('../models/empresaModel');
