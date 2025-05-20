@@ -47,21 +47,51 @@
   <!-- Lado derecho: botón o nombre -->
   <div class="flex items-center space-x-4">
     <% if (user) { %>
-      <div class="relative group text-gray-700">
-        <span class="cursor-pointer hover:text-gray-800 transition">
+      <div class="relative text-gray-700" id="userMenu">
+        <button id="userMenuButton" class="flex items-center cursor-pointer hover:text-gray-800 transition focus:outline-none">
           <% if (user.isAdmin) { %>
             <span class="bg-gray-200 text-xs px-2 py-1 rounded-full mr-2">Admin</span>
           <% } else if (user.isEmpresa) { %>
             <span class="bg-blue-200 text-xs px-2 py-1 rounded-full mr-2">Empresa</span>
           <% } %>
           <%= user.nombre %>
-        </span>
-        <div class="absolute right-0 mt-2 hidden group-hover:block bg-white border rounded shadow-md z-50 min-w-[160px]">
+          <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+      
+        <div id="userDropdown"
+          class="absolute right-0 mt-2 hidden bg-white border rounded shadow-md z-50 min-w-[160px]">
           <a href="/profile" class="block px-4 py-2 text-sm hover:bg-gray-100">Perfil</a>
           <a href="/settings" class="block px-4 py-2 text-sm hover:bg-gray-100">Configuración</a>
           <a href="/logout" class="block px-4 py-2 text-sm hover:bg-gray-100">Cerrar Sesión</a>
         </div>
       </div>
+      
+      <script>
+        document.addEventListener('DOMContentLoaded', function () {
+          const button = document.getElementById('userMenuButton');
+          const dropdown = document.getElementById('userDropdown');
+      
+          function toggleDropdown(e) {
+            e.stopPropagation();
+            dropdown.classList.toggle('hidden');
+          }
+      
+          function closeDropdown() {
+            dropdown.classList.add('hidden');
+          }
+      
+          button.addEventListener('click', toggleDropdown);
+          document.addEventListener('click', function (e) {
+            const isClickInside = document.getElementById('userMenu').contains(e.target);
+            if (!isClickInside) {
+              closeDropdown();
+            }
+          });
+        });
+      </script>
+      
     <% } else { %>
       <a href="/register"
         class="border border-gray-300 text-gray-700 font-medium rounded-full px-5 py-2 hover:bg-gray-50 transition">
