@@ -1,11 +1,20 @@
-// src/routes/paqueteRoutes.js (corregido)
+// src/routes/paqueteRoutes.js (completamente corregido)
 
 const express = require('express');
 const router = express.Router();
 const { check } = require('express-validator');
 const paqueteController = require('../controllers/paqueteController');
 const notificacionController = require('../controllers/notificacionController');
-const { isAuthenticated, isEmpresaOrAdmin } = require('../middlewares/authMiddleware');
+const { isAuthenticated, isEmpresa } = require('../middlewares/authMiddleware');
+
+// Añadir depuración para identificar el problema
+console.log('Cargando rutas de paquetes...');
+console.log('Tipo de paqueteController:', typeof paqueteController);
+if (paqueteController) {
+  console.log('Métodos disponibles:', Object.keys(paqueteController));
+  console.log('Tipo de showCreateForm:', typeof paqueteController.showCreateForm);
+  console.log('Tipo de create:', typeof paqueteController.create);
+}
 
 // Validaciones para paquetes
 const paqueteValidations = [
@@ -22,19 +31,75 @@ const paqueteValidations = [
     .notEmpty().withMessage('El tamaño es obligatorio')
 ];
 
-// Rutas principales de paquetes - Todas accesibles para empresas y admins
-router.get('/paquetes', isEmpresaOrAdmin, paqueteController.index);
-router.get('/paquetes/create', isEmpresaOrAdmin, paqueteController.showCreateForm);
-router.post('/paquetes/create', isEmpresaOrAdmin, paqueteValidations, paqueteController.create);
-router.get('/paquetes/qr/:id', isEmpresaOrAdmin, paqueteController.showQR);
-router.post('/paquetes/estado/:id', isEmpresaOrAdmin, paqueteController.updateEstado);
-router.get('/paquetes/delete/:id', isEmpresaOrAdmin, paqueteController.delete);
-router.post('/paquetes/verificar', isEmpresaOrAdmin, paqueteController.verificar);
+// Función para manejar errores de rutas
+function ensureFunction(handler, defaultHandler) {
+  if (typeof handler === 'function') {
+    return handler;
+  } else {
+    console.error(`Error: handler no es una función, es un ${typeof handler}`);
+    // Devolver un handler por defecto si el original no es una función
+    return defaultHandler || function(req, res) {
+      res.status(500).send('Método no implementado');
+    };
+  }
+}
+
+// Rutas de paquetes para empresas (asegurando que todos los handlers sean funciones)
+router.get('/empresa/paquetes', 
+  isEmpresa, 
+  ensureFunction(paqueteController.index)
+);
+
+router.get('/empresa/paquetes/create', 
+  isEmpresa, 
+  ensureFunction(paqueteController.showCreateForm)
+);
+
+router.post('/empresa/paquetes/create', 
+  isEmpresa, 
+  paqueteValidations, 
+  ensureFunction(paqueteController.create)
+);
+
+router.get('/empresa/paquetes/qr/:id', 
+  isEmpresa, 
+  ensureFunction(paqueteController.showQR)
+);
+
+router.post('/empresa/paquetes/estado/:id', 
+  isEmpresa, 
+  ensureFunction(paqueteController.updateEstado)
+);
+
+router.get('/empresa/paquetes/delete/:id', 
+  isEmpresa, 
+  ensureFunction(paqueteController.delete)
+);
+
+router.post('/empresa/paquetes/verificar', 
+  isEmpresa, 
+  ensureFunction(paqueteController.verificar)
+);
 
 // API de notificaciones (para usar desde la app móvil)
-router.get('/api/notificaciones/:usuarioId', isAuthenticated, notificacionController.getNotificaciones);
-router.get('/api/notificaciones/:usuarioId/noleidas', isAuthenticated, notificacionController.getNoLeidas);
-router.put('/api/notificaciones/:id/leer', isAuthenticated, notificacionController.marcarLeida);
-router.put('/api/notificaciones/:usuarioId/leertodas', isAuthenticated, notificacionController.marcarTodasLeidas);
+router.get('/api/notificaciones/:usuarioId', 
+  isAuthenticated, 
+  ensureFunction(notificacionController.getNotificaciones)
+);
+
+router.get('/api/notificaciones/:usuarioId/noleidas', 
+  isAuthenticated, 
+  ensureFunction(notificacionController.getNoLeidas)
+);
+
+router.put('/api/notificaciones/:id/leer', 
+  isAuthenticated, 
+  ensureFunction(notificacionController.marcarLeida)
+);
+
+router.put('/api/notificaciones/:usuarioId/leertodas', 
+  isAuthenticated, 
+  ensureFunction(notificacionController.marcarTodasLeidas)
+);
 
 module.exports = router;

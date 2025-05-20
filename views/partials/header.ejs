@@ -1,30 +1,54 @@
-<header class="relative z-20 flex items-center justify-between px-8 py-6 bg-white shadow-md">
-  <!-- Logo a la izquierda -->
-  <div class="flex items-center flex-shrink-0">
-    <div class="text-verdeprincipal font-bold text-xl flex items-center">
-      <img src="/images/logo.png" alt="" class="w-20 h-20">
-      
-      KeyLock
+<header class="main-header">
+  <div class="container">
+    <div class="logo">
+      <a href="/">Mi Aplicación</a>
     </div>
-  </div>
-
-  <!-- Nav centrado -->
-  <nav class="flex-1 hidden md:flex justify-center text-gray-600">
-    <ul class="flex space-x-6 items-center">
-      <li><a href="/" class="hover:text-gray-800 transition">Inicio</a></li>
-      <li><a href="/info" class="hover:text-gray-800 transition">¿Cómo funciona <span class="font-semibold text-verdeprincipal">Keylock</span>?</a></li>
-
-      <% if (user) { %>
-        <% if (user.isAdmin) { %>
-          <li class="relative group">
-            <a href="#" class="flex items-center gap-1 hover:text-gray-800 transition">
-              <span class="icon">🔧</span> Administración
-            </a>
-            <div class="absolute top-full left-0 mt-2 hidden group-hover:block bg-white border rounded shadow-md z-50 min-w-[200px]">
-              <a href="/admin/dashboard" class="block px-4 py-2 text-sm hover:bg-gray-100">Dashboard</a>
-              <a href="/admin/empresas" class="block px-4 py-2 text-sm hover:bg-gray-100">Gestión de Empresas</a>
-              <a href="/admin/usuarios" class="block px-4 py-2 text-sm hover:bg-gray-100">Gestión de Usuarios</a>
-              <a href="/admin/paquetes" class="block px-4 py-2 text-sm hover:bg-gray-100">Gestión de Paquetes</a>
+    
+    <nav class="main-nav">
+      <ul>
+        <li><a href="/">Inicio</a></li>
+        <li><a href="/info">Info</a></li>
+        
+        <% if (user) { %>
+          <% if (user.isAdmin) { %>
+            <!-- Menú de navegación para administradores -->
+            <li class="nav-item dropdown">
+              <a href="#" class="nav-link dropdown-toggle">
+                <span class="icon">🔧</span> Administración
+              </a>
+              <div class="dropdown-menu">
+                <a href="/admin/dashboard">Dashboard</a>
+                <a href="/admin/empresas">Gestión de Empresas</a>
+                <a href="/admin/usuarios">Gestión de Usuarios</a>
+              </div>
+            </li>
+          <% } else if (user.isEmpresa) { %>
+            <!-- Menú de navegación para empresas -->
+            <li class="nav-item dropdown">
+              <a href="#" class="nav-link dropdown-toggle">
+                <span class="icon">🏢</span> Mi Empresa
+              </a>
+              <div class="dropdown-menu">
+                <a href="/empresa/dashboard">Dashboard</a>
+                <a href="/empresa/usuarios">Mis Usuarios</a>
+                <a href="/empresa/paquetes">Mis Paquetes</a>
+              </div>
+            </li>
+          <% } %>
+          
+          <li class="user-info">
+            <span class="user-name">
+              <% if (user.isAdmin) { %>
+                <span class="admin-badge">Admin</span>
+              <% } else if (user.isEmpresa) { %>
+                <span class="admin-badge" style="background-color: #2563eb;">Empresa</span>
+              <% } %>
+              <%= user.nombre %>
+            </span>
+            <div class="dropdown-menu">
+              <a href="/profile">Perfil</a>
+              <a href="/settings">Configuración</a>
+              <a href="/logout">Cerrar Sesión</a>
             </div>
           </li>
           <li><a href="/dashboard" class="hover:text-gray-800 transition">Ver Área de Usuario</a></li>

@@ -1,24 +1,36 @@
-// src/models/casilleroModel.js (adaptado a la nueva BD)
+// src/models/casilleroModel.js (modificado para ignorar relación con empresa)
 
 const db = require('../config/database');
 
 const casilleroModel = {
-  // Obtener todos los casilleros
+  // Obtener todos los casilleros sin importar su estado
   async getAll() {
     try {
       const sql = 'SELECT * FROM casillero';
-      return await db.query(sql);
+      const casilleros = await db.query(sql);
+      console.log(`Obtenidos ${casilleros.length} casilleros en total`);
+      return casilleros;
     } catch (error) {
       console.error('Error al obtener casilleros:', error);
       throw error;
     }
   },
 
-  // Obtener casilleros disponibles
+  // Obtener casilleros disponibles y sin filtrar por empresa
   async getDisponibles() {
     try {
+      console.log('Buscando todos los casilleros disponibles sin filtrar por empresa');
+      // Modificado para obtener todos los casilleros disponibles
       const sql = 'SELECT * FROM casillero WHERE estado = "disponible"';
-      return await db.query(sql);
+      const casilleros = await db.query(sql);
+      console.log(`Encontrados ${casilleros.length} casilleros disponibles`);
+      
+      // Si hay casilleros, mostrar información del primero para depuración
+      if (casilleros.length > 0) {
+        console.log('Primer casillero:', JSON.stringify(casilleros[0], null, 2));
+      }
+      
+      return casilleros;
     } catch (error) {
       console.error('Error al obtener casilleros disponibles:', error);
       throw error;
@@ -28,9 +40,17 @@ const casilleroModel = {
   // Obtener casilleros por id
   async findById(id) {
     try {
+      console.log(`Buscando casillero con ID: ${id}`);
       const sql = 'SELECT * FROM casillero WHERE id = ?';
       const results = await db.query(sql, [id]);
-      return results[0];
+      
+      if (results.length > 0) {
+        console.log(`Casillero encontrado: ${results[0].ubicacion} (${results[0].tamanio})`);
+        return results[0];
+      } else {
+        console.log(`No se encontró casillero con ID: ${id}`);
+        return null;
+      }
     } catch (error) {
       console.error('Error al buscar casillero por ID:', error);
       throw error;
@@ -45,12 +65,16 @@ const casilleroModel = {
         throw new Error('Estado de casillero no válido');
       }
       
+      console.log(`Actualizando estado del casillero ID: ${id} a "${estado}"`);
       const sql = 'UPDATE casillero SET estado = ? WHERE id = ?';
       const result = await db.query(sql, [estado, id]);
       
       // Registrar en el historial si se realiza el cambio
       if (result.affectedRows > 0) {
+        console.log(`Casillero ID: ${id} actualizado correctamente`);
         await this.registrarHistorial(id, `Cambio de estado a: ${estado}`);
+      } else {
+        console.log(`No se encontró casillero con ID: ${id} para actualizar`);
       }
       
       return result.affectedRows > 0;

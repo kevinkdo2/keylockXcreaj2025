@@ -1,10 +1,10 @@
-// src/routes/usuarioRoutes.js (corregido)
+// src/routes/usuarioRoutes.js (actualizado para empresas)
 
 const express = require('express');
 const router = express.Router();
 const { check } = require('express-validator');
 const usuarioController = require('../controllers/usuarioController');
-const { isAuthenticated } = require('../middlewares/authMiddleware');
+const { isAuthenticated, isEmpresa } = require('../middlewares/authMiddleware');
 
 // Validaciones para usuarios
 const usuarioValidations = [
@@ -22,12 +22,12 @@ const usuarioValidations = [
 // Middleware para proteger todas las rutas
 router.use(isAuthenticated);
 
-// Rutas CRUD para usuarios
-router.get('/usuarios', usuarioController.index);
-router.get('/usuarios/create', usuarioController.showCreateForm);
-router.post('/usuarios/create', usuarioValidations, usuarioController.create);
-router.get('/usuarios/edit/:id', usuarioController.showEditForm);
-router.post('/usuarios/update/:id', usuarioValidations, usuarioController.update);
-router.get('/usuarios/delete/:id', usuarioController.delete);
+// Rutas para empresas
+router.get('/empresa/usuarios', isEmpresa, usuarioController.index);
+router.get('/empresa/usuarios/create', isEmpresa, usuarioController.showCreateForm);
+router.post('/empresa/usuarios/create', isEmpresa, usuarioValidations, usuarioController.create);
+router.get('/empresa/usuarios/edit/:id', isEmpresa, usuarioController.showEditForm);
+router.post('/empresa/usuarios/update/:id', isEmpresa, usuarioValidations, usuarioController.update);
+router.get('/empresa/usuarios/delete/:id', isEmpresa, usuarioController.delete);
 
 module.exports = router;

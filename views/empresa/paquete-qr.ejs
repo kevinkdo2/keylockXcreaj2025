@@ -1,0 +1,116 @@
+<!-- views/empresa/paquete-qr.ejs (actualizado para manejar características NULL) -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Código QR del Paquete | Mi Aplicación</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/dashboard.css">
+  <link rel="stylesheet" href="/css/admin.css">
+  <link rel="stylesheet" href="/css/paquetes.css">
+</head>
+<body>
+  <%- include('../partials/header') %>
+
+  <main class="container admin-container">
+    <div class="admin-header">
+      <h1>Código QR del Paquete</h1>
+      <p>Paquete registrado correctamente</p>
+    </div>
+
+    <div class="admin-menu">
+      <a href="/empresa/dashboard" class="admin-menu-item">
+        <span class="icon">📊</span>
+        <span>Dashboard</span>
+      </a>
+      <a href="/empresa/usuarios" class="admin-menu-item">
+        <span class="icon">👤</span>
+        <span>Usuarios</span>
+      </a>
+      <a href="/empresa/paquetes" class="admin-menu-item active">
+        <span class="icon">📦</span>
+        <span>Paquetes</span>
+      </a>
+      <a href="/empresa/settings" class="admin-menu-item">
+        <span class="icon">⚙️</span>
+        <span>Configuración</span>
+      </a>
+    </div>
+
+    <div class="admin-content">
+      <div class="qr-container">
+        <div class="qr-info">
+          <h2>Datos del Paquete</h2>
+          <ul class="info-list">
+            <li><strong>Código:</strong> <span class="destaque"><%= paquete.codigo_unico %></span></li>
+            <li><strong>Destinatario:</strong> <%= paquete.nombre_usuario %></li>
+            <li><strong>Remitente:</strong> <%= paquete.remitente %></li>
+            <li><strong>Casillero:</strong> <%= paquete.ubicacion_casillero %></li>
+            <li><strong>Tamaño:</strong> <%= paquete.tamano_visual || (paquete.tamano === 'pequeno' ? 'Pequeño' : 
+                                             paquete.tamano === 'mediano' ? 'Mediano' : 
+                                             paquete.tamano === 'grande' ? 'Grande' : 
+                                             paquete.tamano || 'No especificado') %></li>
+            <li><strong>Fecha de entrega:</strong> <%= new Date(paquete.fecha_entrega).toLocaleString('es-ES') %></li>
+            
+            <% if (paquete.caracteristicas && paquete.caracteristicas.toString().trim() !== '') { %>
+            <li><strong>Características:</strong> <%= typeof paquete.caracteristicas === 'object' ? 
+                                                    JSON.stringify(paquete.caracteristicas) : 
+                                                    paquete.caracteristicas %></li>
+            <% } %>
+          </ul>
+        </div>
+        
+        <div class="qr-code">
+          <div class="qr-image">
+            <img src="<%= qrDataURL %>" alt="Código QR del paquete">
+          </div>
+          <div class="qr-actions">
+            <a href="<%= qrDataURL %>" download="codigo-<%= paquete.codigo_unico %>.png" class="btn btn-primary">
+              <span class="icon">💾</span> Descargar QR
+            </a>
+            <button onclick="printQR()" class="btn btn-secondary">
+              <span class="icon">🖨️</span> Imprimir QR
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <div class="qr-instructions">
+        <h3>Instrucciones</h3>
+        <p>Este código QR contiene el identificador único del paquete. El destinatario deberá presentar este código al momento de recoger su paquete para su verificación.</p>
+        <p>Puede imprimir el código QR o enviarlo por correo electrónico al destinatario.</p>
+      </div>
+      
+      <div class="form-actions centered">
+        <a href="/empresa/paquetes" class="btn btn-secondary">Volver a la lista</a>
+        <a href="/empresa/paquetes/create" class="btn btn-primary">Registrar otro paquete</a>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Mi Aplicación - Todos los derechos reservados</p>
+  </footer>
+
+  <script>
+    // Función para imprimir el QR
+    function printQR() {
+      const printContent = document.querySelector('.qr-container').innerHTML;
+      const originalContent = document.body.innerHTML;
+      
+      document.body.innerHTML = `
+        <div style="text-align: center; padding: 20px;">
+          <h2>Código QR para Paquete: <%= paquete.codigo_unico %></h2>
+          ${printContent}
+        </div>
+      `;
+      
+      window.print();
+      document.body.innerHTML = originalContent;
+      // Recargar scripts
+      location.reload();
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestión de Paquetes | Mi Aplicación</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/dashboard.css">
+  <link rel="stylesheet" href="/css/admin.css">
+  <link rel="stylesheet" href="/css/paquetes.css">
+</head>
+<body>
+  <%- include('../partials/header') %>
+
+  <main class="container admin-container">
+    <div class="admin-header">
+      <h1>Gestión de Paquetes</h1>
+      <p>Administra los paquetes de tu empresa</p>
+    </div>
+
+    <div class="admin-menu">
+      <a href="/empresa/dashboard" class="admin-menu-item">
+        <span class="icon">📊</span>
+        <span>Dashboard</span>
+      </a>
+      <a href="/empresa/usuarios" class="admin-menu-item">
+        <span class="icon">👤</span>
+        <span>Usuarios</span>
+      </a>
+      <a href="/empresa/paquetes" class="admin-menu-item active">
+        <span class="icon">📦</span>
+        <span>Paquetes</span>
+      </a>
+      <a href="/empresa/settings" class="admin-menu-item">
+        <span class="icon">⚙️</span>
+        <span>Configuración</span>
+      </a>
+    </div>
+
+    <div class="admin-content">
+      <div class="actions-bar">
+        <div class="left-actions">
+          <a href="/empresa/paquetes/create" class="btn btn-primary">
+            <span class="icon">+</span> Registrar Paquete
+          </a>
+        </div>
+        <div class="right-actions">
+          <form action="/empresa/paquetes/verificar" method="POST" class="verificar-form">
+            <input type="text" name="codigo" placeholder="Ingrese código del paquete" required>
+            <button type="submit" class="btn btn-secondary">Verificar Paquete</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="filters">
+        <div class="search-box">
+          <input type="text" id="searchPaquete" placeholder="Buscar paquete...">
+          <button class="search-button">🔍</button>
+        </div>
+        <div class="filter-options">
+          <select id="filterEstado">
+            <option value="">Todos los estados</option>
+            <option value="pendiente">Pendiente</option>
+            <option value="recogido">Recogido</option>
+            <option value="cancelado">Cancelado</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="table-container">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Código</th>
+              <th>Destinatario</th>
+              <th>Remitente</th>
+              <th>Casillero</th>
+              <th>Tamaño</th>
+              <th>Fecha Entrega</th>
+              <th>Estado</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% if (paquetes && paquetes.length > 0) { %>
+              <% paquetes.forEach(paquete => { %>
+                <tr data-estado="<%= paquete.estado %>">
+                  <td><%= paquete.codigo_unico %></td>
+                  <td><%= paquete.nombre_usuario %></td>
+                  <td><%= paquete.remitente %></td>
+                  <td><%= paquete.ubicacion_casillero %></td>
+                  <td><%= paquete.tamano %></td>
+                  <td><%= new Date(paquete.fecha_entrega).toLocaleString('es-ES') %></td>
+                  <td>
+                    <span class="estado-badge estado-<%= paquete.estado %>">
+                      <%= paquete.estado.charAt(0).toUpperCase() + paquete.estado.slice(1) %>
+                    </span>
+                  </td>
+                  <td class="actions">
+                    <a href="/empresa/paquetes/qr/<%= paquete.id %>" class="btn-action view" title="Ver QR">
+                      📱
+                    </a>
+                    <% if (paquete.estado === 'pendiente') { %>
+                      <button class="btn-action change-status" 
+                              title="Marcar como recogido"
+                              data-id="<%= paquete.id %>"
+                              data-action="recogido">
+                        ✅
+                      </button>
+                      <button class="btn-action change-status"
+                              title="Cancelar paquete"
+                              data-id="<%= paquete.id %>"
+                              data-action="cancelado">
+                        ❌
+                      </button>
+                    <% } %>
+                    <a href="#" onclick="confirmDelete('<%= paquete.id %>', '<%= paquete.codigo_unico %>')" class="btn-action delete" title="Eliminar">
+                      🗑️
+                    </a>
+                  </td>
+                </tr>
+              <% }); %>
+            <% } else { %>
+              <tr>
+                <td colspan="8" class="no-data">No hay paquetes registrados</td>
+              </tr>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="pagination">
+        <button class="btn-page" disabled>&laquo; Anterior</button>
+        <span class="page-info">Página 1 de 1</span>
+        <button class="btn-page" disabled>Siguiente &raquo;</button>
+      </div>
+    </div>
+  </main>
+
+  <!-- Modal para cambiar estado -->
+  <div id="statusModal" class="modal">
+    <div class="modal-content">
+      <h2>Cambiar Estado del Paquete</h2>
+      <p>¿Está seguro de que desea cambiar el estado del paquete?</p>
+      <form id="statusForm" action="" method="POST">
+        <input type="hidden" id="estadoInput" name="estado" value="">
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary" onclick="closeStatusModal()">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Confirmar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal para confirmar eliminación -->
+  <div id="deleteModal" class="modal">
+    <div class="modal-content">
+      <h2>Confirmar Eliminación</h2>
+      <p>¿Está seguro de que desea eliminar el paquete con código <span id="deletePaqueteCodigo"></span>?</p>
+      <p class="warning">Esta acción no se puede deshacer.</p>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" onclick="closeModal()">Cancelar</button>
+        <a href="#" id="confirmDeleteBtn" class="btn btn-danger">Eliminar</a>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 Mi Aplicación - Todos los derechos reservados</p>
+  </footer>
+
+  <script>
+    // Filtrado de paquetes por estado
+    document.getElementById('filterEstado').addEventListener('change', function() {
+      const estado = this.value;
+      const rows = document.querySelectorAll('tbody tr');
+      
+      rows.forEach(row => {
+        if (!estado || row.dataset.estado === estado) {
+          row.style.display = '';
+        } else {
+          row.style.display = 'none';
+        }
+      });
+    });
+    
+    // Buscar paquetes
+    document.getElementById('searchPaquete').addEventListener('keyup', function() {
+      const searchTerm = this.value.toLowerCase();
+      const rows = document.querySelectorAll('tbody tr');
+      
+      rows.forEach(row => {
+        const codigo = row.cells[0].textContent.toLowerCase();
+        const destinatario = row.cells[1].textContent.toLowerCase();
+        const remitente = row.cells[2].textContent.toLowerCase();
+        
+        if (codigo.includes(searchTerm) || 
+            destinatario.includes(searchTerm) || 
+            remitente.includes(searchTerm)) {
+          row.style.display = '';
+        } else {
+          row.style.display = 'none';
+        }
+      });
+    });
+    
+    // Confirmar eliminación
+    function confirmDelete(id, codigo) {
+      const modal = document.getElementById('deleteModal');
+      const codigoSpan = document.getElementById('deletePaqueteCodigo');
+      const confirmBtn = document.getElementById('confirmDeleteBtn');
+      
+      codigoSpan.textContent = codigo;
+      confirmBtn.href = `/empresa/paquetes/delete/${id}`;
+      modal.style.display = 'flex';
+    }
+    
+    function closeModal() {
+      const modal = document.getElementById('deleteModal');
+      modal.style.display = 'none';
+    }
+    
+    // Cambiar estado
+    const statusButtons = document.querySelectorAll('.change-status');
+    statusButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        const id = this.dataset.id;
+        const action = this.dataset.action;
+        const modal = document.getElementById('statusModal');
+        const form = document.getElementById('statusForm');
+        const estadoInput = document.getElementById('estadoInput');
+        
+        form.action = `/empresa/paquetes/estado/${id}`;
+        estadoInput.value = action;
+        modal.style.display = 'flex';
+      });
+    });
+    
+    function closeStatusModal() {
+      const modal = document.getElementById('statusModal');
+      modal.style.display = 'none';
+    }
+    
+    // Cerrar modales al hacer clic fuera
+    window.onclick = function(event) {
+      const deleteModal = document.getElementById('deleteModal');
+      const statusModal = document.getElementById('statusModal');
+      
+      if (event.target === deleteModal) {
+        closeModal();
+      } else if (event.target === statusModal) {
+        closeStatusModal();
+      }
+    }
+  </script>
+  <script src="/js/paquetes.js"></script>
+</body>
+</html>

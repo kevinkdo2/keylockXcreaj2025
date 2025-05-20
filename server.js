@@ -1,18 +1,19 @@
-// server.js (actualizado para incluir rutas móviles)
+// server.js (actualizado con nuevas rutas para empresas)
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const flash = require('connect-flash');
-const cors = require('cors'); // Añadido para permitir peticiones desde la app móvil
+const cors = require('cors');
 require('dotenv').config();
 
 // Importar rutas
 const authRoutes = require('./src/routes/authRoutes');
 const adminRoutes = require('./src/routes/adminRoutes');
+const empresaRoutes = require('./src/routes/empresaRoutes'); // Nueva ruta para empresas
 const usuarioRoutes = require('./src/routes/usuarioRoutes');
 const paqueteRoutes = require('./src/routes/paqueteRoutes');
-const mobileRoutes = require('./src/routes/mobileRoutes'); // Importar rutas móviles
+const mobileRoutes = require('./src/routes/mobileRoutes');
 
 // Inicializar app
 const app = express();
@@ -27,7 +28,7 @@ app.use(cors({
   origin: '*',
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization']
-})); // Configuración más permisiva de CORS
+}));
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -45,15 +46,16 @@ app.use((req, res, next) => {
   res.locals.success_msg = req.flash('success_msg');
   res.locals.error_msg = req.flash('error_msg');
   res.locals.error = req.flash('error');
-  res.locals.user = req.session.user || null; // Agregar usuario a las variables locales
+  res.locals.user = req.session.user || null;
   next();
 });
 
 // Rutas
 app.use('/', authRoutes);
 app.use('/admin', adminRoutes);
+app.use('/', empresaRoutes); // Nueva ruta para empresas
 app.use('/admin', usuarioRoutes);
-app.use('/admin', paqueteRoutes);
+app.use('/', paqueteRoutes); // Actualizado para usar tanto por admin como por empresas
 
 // Rutas para la app móvil
 app.use('/api/mobile', mobileRoutes);
@@ -112,7 +114,7 @@ app.use((err, req, res, next) => {
   });
 });
 
-// Iniciar servidor - MODIFICADO para escuchar en todas las interfaces
+// Iniciar servidor
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`Servidor corriendo en: http://localhost:${PORT}`);
   console.log(`API móvil disponible en: http://localhost:${PORT}/api/mobile`);
