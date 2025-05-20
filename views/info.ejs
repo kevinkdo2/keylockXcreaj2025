@@ -11,25 +11,335 @@
 <body class="bg-gray-200">
   <%- include('./partials/header') %>
 
+  <div class="sticky top-0 z-10 mb-6">
+    <nav class="bg-emerald-500 p-4">
+      <div class="container mx-auto flex flex-wrap justify-center gap-4">
+        <a href="#funcionamiento" class="bg-white text-gray-800 px-6 py-3 rounded-full font-medium transition hover:bg-gray-100 text-center">Funcionamiento</a>
+        <a href="#beneficios" class="bg-white text-gray-800 px-6 py-3 rounded-full font-medium transition hover:bg-gray-100 text-center">Beneficios</a>
+        <a href="#preguntas" class="bg-white text-gray-800 px-6 py-3 rounded-full font-medium transition hover:bg-gray-100 text-center">Preguntas frecuentes</a>
+        <a href="#aliarse" class="bg-white text-gray-800 px-6 py-3 rounded-full font-medium transition hover:bg-gray-100 text-center">Aliarse</a>
+      </div>
+    </nav>
+  </div>
 
 
-  <!-- Hero Section -->
-   
- 
-      
-    
+  <!-- Contenido Principal -->
+  <div class="container mx-auto px-4 pb-12">
+    <!-- Sección de Funcionamiento -->
+    <section id="funcionamiento" class="mb-12">
+      <div class="bg-blue-100 rounded-full px-8 py-3 w-max mb-6">
+        <h2 class="text-gray-800 font-medium">Funcionamiento</h2>
+      </div>
 
 
-  
+      <!-- Funcionamiento 1: Escaneo de Código QR -->
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+        <div class="md:col-span-3 bg-gray-100 rounded-lg p-6 shadow">
+          <div class="flex items-start gap-4 mb-4">
+            <div class="flex-shrink-0">
+              <i class="fas fa-qrcode text-2xl"></i>
+            </div>
+            <div>
+              <h3 class="text-xl font-bold mb-2">Escaneo de Código QR</h3>
+            </div>
+          </div>
+         
+          <div class="space-y-6">
+            <div class="flex items-start gap-4">
+              <div class="flex-shrink-0 bg-blue-600 text-white rounded-full h-8 w-8 flex items-center justify-center">
+                <i class="fas fa-question"></i>
+              </div>
+              <div>
+                <h4 class="font-bold mb-1">¿Cómo funciona?</h4>
+                <p class="text-gray-600">Cuando realices una compra, recibirás un código QR único en tu aplicación móvil y correo electrónico. Este código te permitirá acceder a tu paquete de manera rápida y segura.</p>
+              </div>
+            </div>
            
-  
- 
+            <div class="flex items-start gap-4">
+              <div class="flex-shrink-0 bg-blue-600 text-white rounded-full h-8 w-8 flex items-center justify-center">
+                <i class="fas fa-question"></i>
+              </div>
+              <div>
+                <h4 class="font-bold mb-1">¿Cómo lo escaneas?</h4>
+                <p class="text-gray-600">Dirígete al casillero que se te asignó, abre el código QR enviado y deja que el escáner del casillero lo lea con su cámara. ¡En segundos, el casillero se abrirá y podrás recoger tu paquete!</p>
+              </div>
+            </div>
+          </div>
+        </div>
+       
+        <div class="bg-gray-100 rounded-lg p-6 flex flex-col items-center justify-center shadow">
+          <div class="text-center">
+            <i class="fas fa-exclamation-triangle text-4xl mb-4"></i>
+            <p class="font-bold text-center">Recuerda que el código es único y no debes compartirlo con nadie.</p>
+          </div>
+        </div>
+      </div>
 
 
-  <footer>
-    <p>&copy; 2025 Mi Aplicación - Todos los derechos reservados</p>
-  </footer>
+      <!-- Funcionamiento 2: Depósito y Retiro del Paquete -->
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+        <div class="md:col-span-3 bg-gray-100 rounded-lg p-6 shadow">
+          <div class="flex items-start gap-4 mb-4">
+            <div class="flex-shrink-0">
+              <i class="fas fa-box text-2xl"></i>
+            </div>
+            <div>
+              <h3 class="text-xl font-bold mb-2">Depósito y Retiro del Paquete</h3>
+            </div>
+          </div>
+         
+          <p class="text-gray-600 mb-4">Cuando el comercio o servicio logístico entregue tu paquete, el paquete será colocado en un casillero asignado para ti. El sistema generará automáticamente una notificación para informarte que tu paquete ha sido entregado y está listo para ser recogido.</p>
+         
+          <p class="text-gray-600 mb-4">Una vez que tu paquete ha llegado, podrás recogerlo en cualquier momento, sin importar la hora, utilizando el código QR o clave digital.</p>
+         
+          <p class="text-gray-600">Con solo escanear el código o ingresar la clave, el casillero se abrirá en cuestión de segundos, permitiéndote retirar tu paquete de manera eficiente.</p>
+        </div>
+       
+        <div class="bg-gray-100 rounded-lg p-6 flex flex-col items-center justify-center shadow">
+          <div class="text-center">
+            <i class="fas fa-exclamation-triangle text-4xl mb-4"></i>
+            <p class="font-bold mb-4">Hay un límite para poder recoger los paquetes.</p>
+            <p class="text-blue-600 underline">
+              <a href="#tiempo-excedido">Encuentra más información sobre qué pasaría si se excede el tiempo de recogida</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- Sección de Beneficios -->
+    <section id="beneficios" class="mb-12">
+      <div class="bg-blue-100 rounded-full px-8 py-3 w-max mb-6">
+        <h2 class="text-gray-800 font-medium">Beneficios</h2>
+      </div>
+
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        <div class="bg-white shadow rounded-lg p-6">
+          <div class="bg-emerald-100 h-16 w-16 rounded-full flex items-center justify-center mb-4">
+            <i class="fas fa-clock text-emerald-600 text-xl"></i>
+          </div>
+          <h3 class="text-lg font-bold mb-2">Disponibilidad 24/7</h3>
+          <p class="text-gray-600">Recoge tus paquetes en cualquier momento, sin restricciones de horario.</p>
+        </div>
+       
+        <div class="bg-white shadow rounded-lg p-6">
+          <div class="bg-emerald-100 h-16 w-16 rounded-full flex items-center justify-center mb-4">
+            <i class="fas fa-shield-alt text-emerald-600 text-xl"></i>
+          </div>
+          <h3 class="text-lg font-bold mb-2">Sistema Seguro</h3>
+          <p class="text-gray-600">Códigos QR únicos y sistema de casilleros con alta seguridad para proteger tus paquetes.</p>
+        </div>
+       
+        <div class="bg-white shadow rounded-lg p-6">
+          <div class="bg-emerald-100 h-16 w-16 rounded-full flex items-center justify-center mb-4">
+            <i class="fas fa-bell text-emerald-600 text-xl"></i>
+          </div>
+          <h3 class="text-lg font-bold mb-2">Notificaciones Instantáneas</h3>
+          <p class="text-gray-600">Recibe alertas en tiempo real cuando tu paquete esté listo para recoger.</p>
+        </div>
+
+
+        <div class="bg-white shadow rounded-lg p-6">
+          <div class="bg-emerald-100 h-16 w-16 rounded-full flex items-center justify-center mb-4">
+            <i class="fas fa-map-marker-alt text-emerald-600 text-xl"></i>
+          </div>
+          <h3 class="text-lg font-bold mb-2">Ubicaciones Convenientes</h3>
+          <p class="text-gray-600">Casilleros situados en puntos estratégicos de fácil acceso.</p>
+        </div>
+       
+        <div class="bg-white shadow rounded-lg p-6">
+          <div class="bg-emerald-100 h-16 w-16 rounded-full flex items-center justify-center mb-4">
+            <i class="fas fa-mobile-alt text-emerald-600 text-xl"></i>
+          </div>
+          <h3 class="text-lg font-bold mb-2">App Intuitiva</h3>
+          <p class="text-gray-600">Gestiona tus entregas desde nuestra aplicación fácil de usar.</p>
+        </div>
+       
+        <div class="bg-white shadow rounded-lg p-6">
+          <div class="bg-emerald-100 h-16 w-16 rounded-full flex items-center justify-center mb-4">
+            <i class="fas fa-leaf text-emerald-600 text-xl"></i>
+          </div>
+          <h3 class="text-lg font-bold mb-2">Ecológico</h3>
+          <p class="text-gray-600">Reducimos la huella de carbono optimizando las rutas de entrega.</p>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- Sección de Preguntas Frecuentes -->
+    <section id="preguntas" class="mb-12">
+      <div class="bg-blue-100 rounded-full px-8 py-3 w-max mb-6">
+        <h2 class="text-gray-800 font-medium">Preguntas frecuentes</h2>
+      </div>
+
+
+      <div class="mb-6">
+        <h3 class="text-2xl font-bold mb-2">¿Tienes alguna pregunta?</h3>
+        <p class="text-gray-500 mb-6">¡Tenemos respuestas!</p>
+
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <button class="w-full bg-gray-100 p-4 rounded-lg text-left flex justify-between items-center hover:bg-gray-300 transition" onclick="toggleAnswer('pregunta1')">
+              <span>¿Qué pasa si no recojo mi paquete a tiempo?</span>
+              <i class="fas fa-chevron-down text-blue-600"></i>
+            </button>
+            <div id="pregunta1" class="hidden bg-white p-4 rounded-lg mt-2 shadow">
+              <p>Si no recoges tu paquete dentro del plazo establecido (generalmente 72 horas), recibirás notificaciones recordatorias. Después del periodo máximo (5 días), el paquete será devuelto al remitente y podrías incurrir en cargos adicionales por almacenamiento extendido.</p>
+            </div>
+          </div>
+
+
+          <div>
+            <button class="w-full bg-gray-100 p-4 rounded-lg text-left flex justify-between items-center hover:bg-gray-300 transition" onclick="toggleAnswer('pregunta2')">
+              <span>¿Cómo puedo rastrear mi paquete en la app?</span>
+              <i class="fas fa-chevron-down text-blue-600"></i>
+            </button>
+            <div id="pregunta2" class="hidden bg-white p-4 rounded-lg mt-2 shadow">
+              <p>Para rastrear tu paquete, abre la aplicación móvil, ve a la sección "Mis Envíos" y selecciona el paquete que deseas rastrear. Allí verás el estado actual, ubicación y tiempo estimado de entrega. También puedes activar notificaciones para recibir actualizaciones en tiempo real.</p>
+            </div>
+          </div>
+
+
+          <div>
+            <button class="w-full bg-gray-100 p-4 rounded-lg text-left flex justify-between items-center hover:bg-gray-300 transition" onclick="toggleAnswer('pregunta3')">
+              <span id="tiempo-excedido">¿Qué pasa si no recojo mi paquete a tiempo?</span>
+              <i class="fas fa-chevron-down text-blue-600"></i>
+            </button>
+            <div id="pregunta3" class="hidden bg-white p-4 rounded-lg mt-2 shadow">
+              <p>Si excedes el tiempo límite para recoger tu paquete (generalmente 5 días), el sistema enviará el paquete de vuelta al remitente. Podrías tener que pagar una tarifa adicional por el almacenamiento y el reenvío. Recomendamos siempre recoger tus paquetes lo antes posible para evitar estos inconvenientes.</p>
+            </div>
+          </div>
+
+
+          <div>
+            <button class="w-full bg-gray-100 p-4 rounded-lg text-left flex justify-between items-center hover:bg-gray-300 transition" onclick="toggleAnswer('pregunta4')">
+              <span>¿Qué pasa si no recojo mi paquete a tiempo?</span>
+              <i class="fas fa-chevron-down text-blue-600"></i>
+            </button>
+            <div id="pregunta4" class="hidden bg-white p-4 rounded-lg mt-2 shadow">
+              <p>Después del periodo máximo de espera, tu paquete será devuelto al remitente. Para evitar esto, puedes solicitar una extensión del tiempo de almacenamiento a través de la app (sujeto a tarifas adicionales) o coordinar que alguien más recoja el paquete en tu nombre mediante un código QR temporal que puedes generar.</p>
+            </div>
+          </div>
+
+
+          <div>
+            <button class="w-full bg-gray-100 p-4 rounded-lg text-left flex justify-between items-center hover:bg-gray-300 transition" onclick="toggleAnswer('pregunta5')">
+              <span>¿Cómo puedo rastrear mi paquete en la app?</span>
+              <i class="fas fa-chevron-down text-blue-600"></i>
+            </button>
+            <div id="pregunta5" class="hidden bg-white p-4 rounded-lg mt-2 shadow">
+              <p>Ingresa a la sección "Seguimiento" de la app, donde encontrarás todos tus paquetes activos. Cada uno mostrará su estado actual (en tránsito, entregado al casillero, listo para recoger). También puedes configurar alertas personalizadas para cada etapa del proceso de entrega.</p>
+            </div>
+          </div>
+
+
+          <div>
+            <button class="w-full bg-gray-100 p-4 rounded-lg text-left flex justify-between items-center hover:bg-gray-300 transition" onclick="toggleAnswer('pregunta6')">
+              <span>¿Qué pasa si no recojo mi paquete a tiempo?</span>
+              <i class="fas fa-chevron-down text-blue-600"></i>
+            </button>
+            <div id="pregunta6" class="hidden bg-white p-4 rounded-lg mt-2 shadow">
+              <p>Si superas el límite de tiempo, recibirás una notificación final 24 horas antes de que el paquete sea devuelto. Si tienes circunstancias especiales que te impiden recoger el paquete, comunícate con nuestro servicio al cliente para buscar una solución adaptada a tu situación.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- Sección de Aliarse -->
+    <section id="aliarse" class="mb-12">
+      <div class="bg-blue-100 rounded-full px-8 py-3 w-max mb-6">
+        <h2 class="text-gray-800 font-medium">Aliarse</h2>
+      </div>
+
+
+      <div class="bg-white shadow rounded-lg p-6">
+        <h3 class="text-2xl font-bold mb-4">¿Quieres formar parte de nuestra red?</h3>
+        <p class="text-gray-600 mb-6">Si tienes un negocio y quieres ofrecer nuestro servicio de casilleros a tus clientes, o si eres una empresa de logística que busca optimizar sus entregas, ¡nos encantaría colaborar contigo!</p>
+       
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div>
+            <h4 class="text-lg font-bold mb-3">Beneficios para comercios</h4>
+            <ul class="space-y-2 text-gray-600">
+              <li class="flex items-start gap-2">
+                <i class="fas fa-check-circle text-emerald-500 mt-1"></i>
+                <span>Aumenta el tráfico de clientes a tu establecimiento</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <i class="fas fa-check-circle text-emerald-500 mt-1"></i>
+                <span>Genera ingresos adicionales por cada paquete</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <i class="fas fa-check-circle text-emerald-500 mt-1"></i>
+                <span>Mejora la experiencia de compra de tus clientes</span>
+              </li>
+            </ul>
+          </div>
+         
+          <div>
+            <h4 class="text-lg font-bold mb-3">Beneficios para logística</h4>
+            <ul class="space-y-2 text-gray-600">
+              <li class="flex items-start gap-2">
+                <i class="fas fa-check-circle text-emerald-500 mt-1"></i>
+                <span>Reduce costos de entregas fallidas</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <i class="fas fa-check-circle text-emerald-500 mt-1"></i>
+                <span>Optimiza rutas de entrega</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <i class="fas fa-check-circle text-emerald-500 mt-1"></i>
+                <span>Aumenta la satisfacción del cliente final</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+       
+        <div class="mt-8">
+          <a href="#contacto" class="bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3 px-6 rounded-lg transition inline-block">Contáctanos para aliarte</a>
+        </div>
+      </div>
+    </section>
+  </div>
+
+
 
   <script src="/js/main.js"></script>
+  <script>
+    // Función para el acordeón de preguntas frecuentes
+    function toggleAnswer(id) {
+      const element = document.getElementById(id);
+      if (element.classList.contains('hidden')) {
+        element.classList.remove('hidden');
+      } else {
+        element.classList.add('hidden');
+      }
+    }
+
+
+    // Smooth scrolling para enlaces de anclaje
+    document.addEventListener('DOMContentLoaded', function() {
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+         
+          const targetId = this.getAttribute('href');
+          const targetElement = document.querySelector(targetId);
+         
+          if (targetElement) {
+            window.scrollTo({
+              top: targetElement.offsetTop - 80, // Compensación para el encabezado fijo
+              behavior: 'smooth'
+            });
+          }
+        });
+      });
+    });
+  </script>
+  <%- include('./partials/footer') %>
 </body>
 </html>

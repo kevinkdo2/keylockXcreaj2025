@@ -16,47 +16,54 @@
   <!-- Hero Section -->
    
   <div class="bg-white flex items-center justify-center w-screen h-screen p-0">
-    <div class="relative bg-white w-full h-full overflow-hidden">
-      <!-- SVG circles -->
-      <svg class="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 1200 600" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="600" cy="300" r="380" stroke="#d9d9d9" stroke-width="3" opacity="0.3"/>
-        <circle cx="600" cy="300" r="280" stroke="#d9d9d9" stroke-width="3" opacity="0.3"/>
-        <circle cx="600" cy="300" r="180" stroke="#d9d9d9" stroke-width="3" opacity="0.3"/>
-      </svg>
-      <!-- Main content -->
-      <div class="relative z-10 flex flex-col md:flex-row items-center justify-between h-full p-8 md:p-16 md:mt-8"> 
-        <!-- Left text -->
-        <div class="flex-1 flex justify-center md:justify-start">
-          <p class="text-gray-900 text-lg md:text-xl font-normal max-w-[220px] leading-snug select-none">
-            The ultimate shopping<br />hack is here.
-          </p>
+    <div class="relative bg-white w-full max-w-7xl h-full rounded-3xl overflow-hidden mx-auto">
+        <!-- Header/Navigation -->
+        
+
+        <!-- SVG circles -->
+        <svg class="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 1200 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="600" cy="400" r="500" stroke="#d9d9d9" stroke-width="3" opacity="0.6"/>
+            <circle cx="600" cy="400" r="380" stroke="#d9d9d9" stroke-width="3" opacity="0.6"/>
+            <circle cx="600" cy="400" r="260" stroke="#d9d9d9" stroke-width="3" opacity="0.6"/>
+        </svg>
+
+        <!-- Main content -->
+        <div class="relative z-10 flex flex-col md:flex-row items-center justify-between h-full p-8 md:p-16">
+            <!-- Left text -->
+            <div class="flex-1 flex justify-center md:justify-start mb-8 md:mb-0">
+                <p class="text-gray-900 text-2xl md:text-3xl font-normal max-w-[280px] leading-tight select-none">
+                    Lo último<br />en la seguridad<br/> ya está aquí.
+                </p>
+            </div>
+            
+            <!-- Center - Phone Image and Title -->
+            <div class="flex-1 flex flex-col items-center justify-center relative h-full mt-48">
+                <h1 class="text-gray-900 font-semibold text-4xl md:text-8xl leading-tight select-none text-center">
+                    Bienvenido<br />
+                    <span class="text-gray-900">a</span>
+                    <span class="text-verdeprincipal">KeyLock</span>
+                </h1>
+                <div aria-hidden="true" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 md:w-96 h-64 md:h-96 rounded-full bg-white"></div>
+                <div class="flex items-center justify-center h-full">
+                    <img src="/images/landingpagephone.png" alt="Phone app image" class="relative z-10 w-auto h-3/4 max-h-full object-contain" />
+                </div>
+            </div>
+            
+            <!-- Right -->
+            <div class="flex-1 flex flex-col items-center md:items-end max-w-sm space-y-8 mt-8 md:mt-0">
+                <p class="text-gray-500 text-lg md:text-xl font-normal text-center md:text-right leading-relaxed select-none">
+                    Adiós a las molestias de paquetería.
+                </p>
+                <div class="flex gap-4">
+                    <a href="#" class="bg-gray-900 text-white text-sm font-normal rounded-full px-5 py-3 flex items-center gap-2 hover:brightness-110 transition select-none">
+                        <i class="fab fa-apple text-xl"></i><span>App Store</span>
+                    </a>
+                    <a href="#" class="bg-gray-900 text-white text-sm font-normal rounded-full px-5 py-3 flex items-center gap-2 hover:brightness-110 transition select-none">
+                        <i class="fab fa-google-play text-xl"></i><span>Google Play</span>
+                    </a>
+                </div>
+            </div>
         </div>
-        <!-- Center - Phone Image -->
-        <div class="flex-1 flex flex-col items-center justify-center relative h-full">
-          <h1 class="text-gray-900 font-semibold text-[1.5rem] md:text-[3.5rem] leading-[1.05] select-none">
-            Bienvenido a<br />
-            <span class="text-azuloscuro">KeyLock</span>
-          </h1>
-          <div aria-hidden="true" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 md:w-96 h-64 md:h-96 rounded-full bg-white"></div>
-          <div class="flex items-center justify-center h-full">
-            <img src="/images/landingpagephone.png" alt="Phone app image" class="relative z-10 w-auto h-4/5 max-h-full object-contain" />
-          </div>
-        </div> 
-        <!-- Right -->
-        <div class="flex-1 flex flex-col items-center md:items-end max-w-sm space-y-8">
-          <p class="text-gray-500 text-lg md:text-2xl font-normal text-center md:text-right leading-relaxed select-none">
-            Adiós a las molestias de paquetería.
-          </p>
-          <div class="flex gap-6">
-            <a href="#" class="bg-gray-900 text-white text-xs md:text-sm font-normal rounded-full px-5 py-2.5 flex items-center gap-2 hover:brightness-110 transition select-none">
-              <i class="fab fa-apple text-xl"></i><span>App Store</span>
-            </a>
-            <a href="#" class="bg-gray-900 text-white text-xs md:text-sm font-normal rounded-full px-5 py-2.5 flex items-center gap-2 hover:brightness-110 transition select-none">
-              <i class="fab fa-google-play text-xl"></i><span>Google Play</span>
-            </a>
-          </div>
-        </div>
-      </div>
     </div>
 </div>
   <!-- Hero Section -->
@@ -67,35 +74,30 @@
     <div class="bg-azuloscuro rounded-xl flex flex-col justify-between p-6 md:p-10 w-full md:w-1/2 min-h-[500px]">
      <div>
       <h2 class="text-white font-semibold text-6xl">
-       Dumb
+       Clock...
        <br/>
-       Dumb
+       Look...
        <br/>
-       Dumb
+       ¡Lock!
       </h2>
      </div>
      
      <p class="text-azulclaro text-[12px] leading-tight mt-6 max-w-[180px]">
-      iste reprehenderit! Deleniti itaque modi laudantium sapiente quos doloribus minus facilis explicabo? Commodi id quam adipisci.
+      Con llaves digitales únicas, el acceso más rápido... <span class="font-semibold">¡Ha llegado <span class="text-verdeprincipal">Keylock</span>!</span>
      </p>
     </div>
     <!-- Right white box -->
     <div class="bg-[#f5f7f6] rounded-xl flex flex-col justify-center w-full md:w-1/2 p-6 md:p-10">
      <p class="text-azuloscuro text-[12px] font-medium mb-1">
-      Lorem ipsum dolor sit amet consectetur 
+      Tu paquete, tu tiempo, tu seguridad.
      </p>
      <h1 class="text-black font-extrabold text-6xl leading-[1.1] mb-3 max-w-[420px]">
-      Lorem ipsum dolor sit amet, consectetur
-      <br/>
-      Ipsum
-      <span class="border-b-4 border-azuloscuro pb-1">
-       Dolor
-      </span>
-      <br/>
-      Sit
+      ¡Tus paquetes, más <span class="border-b-4 border-azuloscuro pb-1">seguros
+       </span> que nunca!
      </h1>
      <p class="text-[#5f6670] text-[14px] max-w-[420px] mb-8">
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat libero, totam et aperiam corrupti 
+      Descarga nuestra app y olvídate de los contratiempos.
+
      </p>
      <div class="flex gap-4 flex-wrap">
       <a class="bg-black text-white rounded-md px-5 py-3 flex items-center gap-3 min-w-[160px] justify-center" href="#">
@@ -103,7 +105,7 @@
        </i>
        <div class="text-left">
         <p class="text-[10px] font-light">
-         Available on the
+         Disponible en
         </p>
         <p class="font-semibold text-[14px]">
          App Store
@@ -115,7 +117,7 @@
        </i>
        <div class="text-left">
         <p class="text-[10px] font-light">
-         Get it on
+        Consíguela en
         </p>
         <p class="font-semibold text-[14px]">
          Google Play
@@ -127,97 +129,216 @@
    </div>
   <!--Leyenda-->
  
-
-<div class=" p-w-full justify-center flex ">
-  <div class="bg-white p-6 border-b border-gray-300 w-4/5 max-w-none">
-    <div class="max-w-6xl w-full mx-auto">
-    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 sm:mb-12">
-      <div>
-        <h2 class="text-black text-2xl sm:text-3xl font-semibold">Nuestros <span class="text-azuloscuro">Servicios</span></h2>
-      </div>
-      <div class="mt-4 sm:mt-0">
-          <button class="group flex items-center rounded-full bg-white shadow-lg focus:outline-none">
-            <!-- Barra verde con texto -->
-            <div class="bg-azulclaro px-4 py-2 rounded-r-full rounded-l-full transition-all duration-300 ease group-hover:mr-3">
-              <span class="text-sm sm:text-base font-semibold text-gray-800">Ve más información aquí</span>
-            </div>
-            <!-- Círculo morado con flecha -->
-            <a href="#"><div class="w-10 h-10 bg-azuloscuro flex items-center justify-center rounded-full transition-all duration-300 ease group-hover:ml-3">
-              <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-7-7l7 7-7 7"/>
-              </svg>
-            </div></a>
-          </button>
-      </div>
+  <!--Servicios-->
+  <div class="max-w-7xl mx-auto">
+    <div class="mb-10">
+     <h1 class="text-4xl sm:text-5xl font-normal text-black leading-tight flex flex-wrap items-center gap-2">
+      ¿Quieres saber más sobre
+     </h1>
+     <h1 class="text-4xl sm:text-5xl font-semibold text-azuloscuro leading-tight flex flex-wrap items-center gap-2">
+      nuestro funcionamiento <span class="text-black font-normal">?</span>
+     </h1>
     </div>
-    
-    <div class="grid grid-cols-1 sm:grid-cols-2  lg:grid-cols-3 gap-12 sm:gap-6">
-      <div class="relative mt-10">
-        <div class="w-full aspect-square bg-azuloscuro bg-opacity-70 rounded-full flex flex-col items-center justify-center p-6">
-          <!-- Icon Container -->
-          <div class="absolute -top-12 left-1/2 transform -translate-x-1/2 w-24 h-24 rounded-full bg-azuloscuro bg-opacity-40 flex items-center justify-center">
-            <div class="w-12 h-12 rounded-full bg-azuloscuro flex items-center justify-center">
-              <span class="text-white text-xs font-bold">UX</span>
-            </div>
-          </div>
-          <div class="mt-10 text-center">
-            <h3 class="text-xl font-semibold text-gray-800 mb-2">UI/UX Design</h3>
-            <p class="text-white text-sm mb-4 px-4">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            </p>
-          </div>
-        </div>
-      </div>
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-8 sm:gap-0">
       
-     <div class="relative mt-10">
-        <div class="w-full aspect-square bg-azuloscuro bg-opacity-70 rounded-full flex flex-col items-center justify-center p-6">
-          <!-- Icon Container -->
-          <div class="absolute -top-12 left-1/2 transform -translate-x-1/2 w-24 h-24 rounded-full bg-azuloscuro bg-opacity-40 flex items-center justify-center">
-            <div class="w-12 h-12 rounded-full bg-azuloscuro flex items-center justify-center">
-              <span class="text-white text-xs font-bold">UX</span>
+      <nav class="w-full sm:w-96 flex flex-col gap-4 px-4 py-6">
+        <div class="flex justify-between items-center mb-6 px-2 sm:px-0">
+          <h2 class="text-lg font-normal flex items-center gap-2">
+           <span class="w-1.5 h-7 bg-azuloscuro inline-block rounded-sm">
+           </span>
+           <div class="flex items-center gap-4 text-black text-base font-normal select-none">
+             <button class="group flex items-center rounded-full bg-white shadow-lg focus:outline-none">
+               <!-- Barra verde con texto -->
+               <a href="/info"><div class= "bg-opacity-40 px-4 py-2 rounded-r-full rounded-l-full transition-all duration-300 ease group-hover:mr-3">
+                 <span class="text-sm sm:text-base font-normal text-gray-800">Ve más información aquí</span>
+               </div></a>
+               <!-- Círculo morado con flecha -->
+               <a href="/info"><div class="w-10 h-10 bg-azuloscuro flex items-center justify-center rounded-full transition-all duration-300 ease group-hover:ml-3">
+                 <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                   <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-7-7l7 7-7 7"/>
+                 </svg>
+               </div></a>
+             </button>
             </div>
-          </div>
-          <div class="mt-10 text-center">
-            <h3 class="text-xl font-semibold text-gray-800 mb-2">UI/UX Design</h3>
-            <p class="text-white text-sm mb-4 px-4">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            </p>
-          </div>
-        </div>
-      </div>
+          </h2>
+         </div>
+        <a href="#contacto" class="flex items-center justify-between rounded-full bg-[#F5F5F5] px-6 py-3 text-black text-base font-normal shadow-[0_2px_6px_rgba(0,0,0,0.05)] hover:bg-[#eaeaea] transition">
+          <span class="flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-black"></span>
+            <span>Contacto.</span>
+          </span>
+          <span class="text-azuloscuro text-xl leading-none">
+            <svg
+              class="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M17 8l4 4m0 0l-4 4m4-4H3"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+              ></path>
+            </svg>
+          </span>
+        </a>
+        <a href="/register" class="flex items-center justify-between rounded-full border border-[#D9D9D9] px-6 py-3 text-black text-base font-normal hover:bg-[#f9f9f9] transition">
+          <span class="flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-[#4B4B4B]"></span>
+            <span>Sé parte.</span>
+          </span>
+          <span class="text-azuloscuro text-xl leading-none">
+            <svg
+              class="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M17 8l4 4m0 0l-4 4m4-4H3"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+              ></path>
+            </svg>
+          </span>
+        </a>
+        <a href="" class="flex items-center justify-between rounded-full border border-[#D9D9D9] px-6 py-3 text-black text-base font-normal hover:bg-[#f9f9f9] transition">
+          <span class="flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-[#B3B3B3]"></span>
+            <span>Descarga la app.</span>
+          </span>
+          <span class="text-azuloscuro text-xl leading-none">
+            <svg
+              class="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M17 8l4 4m0 0l-4 4m4-4H3"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+              ></path>
+            </svg>
+          </span>
+        </a>
+      </nav>
       
-      <div class="relative mt-10">
-        <div class="w-full aspect-square bg-azuloscuro bg-opacity-70 rounded-full flex flex-col items-center justify-center p-6">
-          <!-- Icon Container -->
-          <div class="absolute -top-12 left-1/2 transform -translate-x-1/2 w-24 h-24 rounded-full bg-azuloscuro bg-opacity-40 flex items-center justify-center">
-            <div class="w-12 h-12 rounded-full bg-azuloscuro flex items-center justify-center">
-              <span class="text-white text-xs font-bold">UX</span>
-            </div>
-          </div>
-          <div class="mt-10 text-center">
-            <h3 class="text-xl font-semibold text-gray-800 mb-2">UI/UX Design</h3>
-            <p class="text-white text-sm mb-4 px-4">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            </p>
-          </div>
+
+     <div class="w-full sm:w-[calc(100%-18rem)]">
+      <h2 class="text-center text-3xl font-semibold">¡Así es cómo nos identificamos!</h2>
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-6 px-4 py-8 overflow-x-auto scrollbar-hide">
+  
+        <!-- Tarjeta 1 -->
+        <div class="w-64 h-64 bg-azulclaro rounded-3xl shadow-xl flex flex-col items-center justify-center text-center p-6 transform transition duration-300 hover:scale-105">
+          <h3 class="text-2xl font-bold text-gray-800 mb-2">Seguridad</h3>
+          <p class="text-white text-sm">
+            <span class="text-azuloscuro">¿Cansado de que tus paquetes sean confundidos?</span>
+            <span class="text-gray-700">Con nuestros códigos QR, tan únicos y especiales como tú... ¡Jamás podrá tu paquete ser confundido otra vez!</span>
+          </p>
+        </div>
+      
+        <!-- Tarjeta 2 -->
+        <div class="w-64 h-64 bg-azulclaro rounded-3xl shadow-xl flex flex-col items-center justify-center text-center p-6 transform transition duration-300 hover:scale-105">
+          <h3 class="text-2xl font-bold text-gray-800 mb-2">Accesibilidad</h3>
+          <p class="text-white text-sm">
+            <span class="text-azuloscuro">Retirar tu paquete ¡jamás fue tan fácil!</span>
+            <span class="text-gray-700">Con nuestra guía de tracking, ubicar tu paquete será la cosa más fácil del mundo.</span>
+          </p>
+        </div>
+      
+        <!-- Tarjeta 3 -->
+        <div class="w-64 h-64 bg-azulclaro rounded-3xl shadow-xl flex flex-col items-center justify-center text-center p-6 transform transition duration-300 hover:scale-105">
+          <h3 class="text-2xl font-bold text-gray-800 mb-2">Practicidad</h3>
+          <p class="text-white text-sm">
+            <span class="text-azuloscuro">A que nunca fue tan sencillo usar una app...</span>
+            <span class="text-gray-700">Todo lo que necesitas de por aquí, sólo a un dedo de distancia.</span>
+          </p>
         </div>
       </div>
+     </div>
+    </div>
+   </div>
+  <!--Servicios-->
+
+  <!--Contacto-->
+  <div class="flex items-center justify-center min-h-screen p-4" id="contacto">
+    <div class="max-w-8xl w-full">
+        <!-- Main Container -->
+        <div class="relative bg-azuloscuro rounded-lg overflow-hidden">
+            <!-- Orange Contact Section -->
+            <div class="p-8 md:p-12 pt-10 md:pt-16">
+                <h1 class="text-white text-4xl md:text-5xl font-bold mb-4">CONTACTO</h1>
+                <p class="text-white mb-2 font-semibold">¿Tienes alguna pregunta?</p>
+                <p class="text-white">Siéntete libre de acudir a nuestro canal comunicativo.</p>
+            </div>
+            
+            <!-- White Call to Action Box -->
+            <div class="absolute right-0 top-0 bg-gray-200 p-4 md:p-24 rounded-lg md:rounded-none md:rounded-bl-[100px] max-w-xs md:max-w-3xl">
+                <p class="text-azuloscuro font-bold text-3xl text-center">CONTÁCTANOS HOY, Y MAÑANA, Y CUANDO QUIERAS!</p>
+            </div>
+            
+            <!-- Contact Info Section -->
+            <div class="p-4 md:p-8 pt-16 md:pt-20">
+                <div class="grid md:grid-cols-3 gap-4">
+                    <!-- Address -->
+                    <div class="bg-white p-6 rounded-[30px]">
+                      <h2 class="text-blue-900 text-lg mb-4">VÍA DIRECTA</h2>
+                      <form class="space-y-3">
+                          <div>
+                              <input type="text" placeholder="Nombre" class="w-full p-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-azulclaro focus:border-transparent">
+                          </div>
+                          <div>
+                              <input type="email" placeholder="Email" class="w-full p-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-azulclaro focus:border-transparent">
+                          </div>
+                          <div>
+                              <textarea placeholder="Mensaje" rows="2" class="w-full p-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-azulclaro focus:border-transparent"></textarea>
+                          </div>
+                          <button type="submit" class="w-full bg-azuloscuro text-white font-bold py-2 px-4 rounded-lg hover:bg-orange-600 transition duration-300">Enviar mensaje</button>
+                      </form>
+                  </div>
+                    
+                    <!-- Phone & Email -->
+                    <div class="bg-white p-6 rounded-[30px]">
+                        <h2 class="text-azuloscuro text-lg mb-4">NÚMERO</h2>
+                        <p class="text-azuloscuro text-xl font-bold mb-4">+503 5858 5858</p>
+                        
+                        <h2 class="text-azuloscuro text-lg mb-4">EMAIL</h2>
+                        <p class="text-azuloscuro text-xl font-bold">info@keylock.com</p>
+                    </div>
+                    
+                    <!-- Social -->
+                    <div class="bg-white p-6 rounded-[30px]">
+                        <h2 class="text-azuloscuro text-lg mb-4">NUESTRAS REDES</h2>
+                        <div class="flex gap-4">
+                            <a href="#" class="bg-azulclaro p-3 rounded-lg">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z" />
+                                </svg>
+                            </a>
+                            <a href="#" class="bg-azulclaro p-3 rounded-lg">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                
+            </div>
+        </div>
     </div>
   </div>
+  <!--Contacto-->
 
-  </div>
-</div>
-
-
-  
-           
-  
- 
-
-
-  <footer>
-    <p>&copy; 2025 Mi Aplicación - Todos los derechos reservados</p>
-  </footer>
+  <%- include('./partials/footer') %>
 
   <script src="/js/main.js"></script>
 </body>
