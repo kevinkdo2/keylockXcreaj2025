@@ -1,4 +1,4 @@
-<!-- views/empresa/paquete-form.ejs (actualizado para visualizar mejor tamanio) -->
+<!-- views/empresa/paquete-form.ejs -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -40,14 +40,6 @@
 
     <div class="admin-content">
       <div class="form-container">
-        <% if (process.env.NODE_ENV === 'development' || true) { %>
-          <div style="background-color: #f9f9f9; padding: 10px; margin-bottom: 20px; border: 1px solid #ddd; border-radius: 4px;">
-            <h4>Datos disponibles:</h4>
-            <p>Usuarios: <%= usuarios ? usuarios.length : 0 %> usuarios encontrados</p>
-            <p>Casilleros: <%= casilleros ? casilleros.length : 0 %> casilleros disponibles</p>
-          </div>
-        <% } %>
-
         <form action="<%= action %>" method="POST" class="admin-form">
           <div class="form-group">
             <label for="remitente">Remitente (Quién entrega)</label>
@@ -72,7 +64,6 @@
                 <% usuarios.forEach(usuario => { %>
                   <option value="<%= usuario.id %>" <%= (paquete.id_usuario == usuario.id) ? 'selected' : '' %>>
                     <%= usuario.nombre %> (<%= usuario.correo %>)
-                    <% if (usuario.id_empresa === null) { %>[Sin empresa]<% } %>
                   </option>
                 <% }); %>
               <% } else { %>
@@ -81,9 +72,6 @@
             </select>
             <% if (typeof errors !== 'undefined' && errors.find(e => e.param === 'id_usuario')) { %>
               <span class="error-message"><%= errors.find(e => e.param === 'id_usuario').msg %></span>
-            <% } %>
-            <% if (usuarios && usuarios.length === 0) { %>
-              <span class="error-message">Debe crear usuarios antes de registrar paquetes. <a href="/empresa/usuarios/create">Crear Usuario</a></span>
             <% } %>
           </div>
           
@@ -94,13 +82,9 @@
               <% if (casilleros && casilleros.length > 0) { %>
                 <% casilleros.forEach(casillero => { %>
                   <option value="<%= casillero.id %>" 
-                          data-tamano="<%= casillero.tamanio %>"
+                          data-tamano="<%= casillero.tamano %>"
                           <%= (paquete.id_casillero == casillero.id) ? 'selected' : '' %>>
-                    ID: <%= casillero.id %> - <%= casillero.ubicacion %> - 
-                    <%= casillero.tamanio === 'pequeno' ? 'pequeño' : 
-                       casillero.tamanio === 'mediano' ? 'mediano' : 
-                       casillero.tamanio === 'grande' ? 'grande' : 
-                       casillero.tamanio %>
+                    <%= casillero.ubicacion %> - <%= casillero.tamano %>
                   </option>
                 <% }); %>
               <% } else { %>
@@ -110,16 +94,13 @@
             <% if (typeof errors !== 'undefined' && errors.find(e => e.param === 'id_casillero')) { %>
               <span class="error-message"><%= errors.find(e => e.param === 'id_casillero').msg %></span>
             <% } %>
-            <% if (casilleros && casilleros.length === 0) { %>
-              <span class="error-message">No hay casilleros disponibles. Por favor, contacte al administrador.</span>
-            <% } %>
           </div>
           
           <div class="form-group">
             <label for="tamano">Tamaño del Paquete</label>
             <select id="tamano" name="tamano" required>
               <option value="">Seleccione un tamaño</option>
-              <option value="pequeño" <%= (paquete.tamano === 'pequeño' || paquete.tamano === 'pequeno') ? 'selected' : '' %>>Pequeño</option>
+              <option value="pequeño" <%= (paquete.tamano === 'pequeño') ? 'selected' : '' %>>Pequeño</option>
               <option value="mediano" <%= (paquete.tamano === 'mediano') ? 'selected' : '' %>>Mediano</option>
               <option value="grande" <%= (paquete.tamano === 'grande') ? 'selected' : '' %>>Grande</option>
             </select>
@@ -143,9 +124,7 @@
           
           <div class="form-actions">
             <a href="/empresa/paquetes" class="btn btn-secondary">Cancelar</a>
-            <button type="submit" class="btn btn-primary" <%= (usuarios && usuarios.length === 0) || (casilleros && casilleros.length === 0) ? 'disabled' : '' %>>
-              Registrar Paquete
-            </button>
+            <button type="submit" class="btn btn-primary">Registrar Paquete</button>
           </div>
         </form>
       </div>
@@ -177,8 +156,7 @@
         let showWarning = false;
         
         // Lógica para mostrar advertencia según incompatibilidad
-        if ((casilleroTamano === 'pequeno' || casilleroTamano === 'pequeño') && 
-            paqueteTamano !== 'pequeño' && paqueteTamano !== 'pequeno') {
+        if (casilleroTamano === 'pequeño' && paqueteTamano !== 'pequeño') {
           showWarning = true;
         } else if (casilleroTamano === 'mediano' && paqueteTamano === 'grande') {
           showWarning = true;
@@ -188,13 +166,11 @@
       }
       
       // Asignar eventos
-      if (tamanoSelect && casilleroSelect) {
-        tamanoSelect.addEventListener('change', checkTamanoCompatibility);
-        casilleroSelect.addEventListener('change', checkTamanoCompatibility);
-        
-        // Verificar al cargar la página
-        checkTamanoCompatibility();
-      }
+      tamanoSelect.addEventListener('change', checkTamanoCompatibility);
+      casilleroSelect.addEventListener('change', checkTamanoCompatibility);
+      
+      // Verificar al cargar la página
+      checkTamanoCompatibility();
     });
   </script>
 </body>

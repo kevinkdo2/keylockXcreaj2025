@@ -1,9 +1,10 @@
+<!-- views/empresa/dashboard.ejs -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Panel de Administración | Mi Aplicación</title>
+  <title>Panel de Empresa | Mi Aplicación</title>
   <link rel="stylesheet" href="/css/style.css">
   <link rel="stylesheet" href="/css/dashboard.css">
   <link rel="stylesheet" href="/css/admin.css">
@@ -13,42 +14,46 @@
 
   <main class="container admin-container">
     <div class="admin-header">
-      <h1>Panel de Administración</h1>
-      <p>Gestiona todos los aspectos de la plataforma</p>
+      <h1>Panel de Empresa</h1>
+      <p>Gestiona todos los aspectos de tu empresa</p>
     </div>
 
     <div class="admin-menu">
-      <a href="/admin/dashboard" class="admin-menu-item active">
+      <a href="/empresa/dashboard" class="admin-menu-item active">
         <span class="icon">📊</span>
         <span>Dashboard</span>
       </a>
-      <a href="/admin/empresas" class="admin-menu-item">
-        <span class="icon">🏢</span>
-        <span>Empresas</span>
-      </a>
-      <a href="/admin/usuarios" class="admin-menu-item">
+      <a href="/empresa/usuarios" class="admin-menu-item">
         <span class="icon">👤</span>
         <span>Usuarios</span>
+      </a>
+      <a href="/empresa/paquetes" class="admin-menu-item">
+        <span class="icon">📦</span>
+        <span>Paquetes</span>
+      </a>
+      <a href="/empresa/settings" class="admin-menu-item">
+        <span class="icon">⚙️</span>
+        <span>Configuración</span>
       </a>
     </div>
 
     <div class="admin-content">
       <div class="admin-stats">
         <div class="stat-card">
-          <h3>Total Empresas</h3>
-          <p class="stat-number">15</p>
-          <p class="stat-trend positive">+3 este mes</p>
-        </div>
-        
-        <div class="stat-card">
           <h3>Total Usuarios</h3>
-          <p class="stat-number">45</p>
-          <p class="stat-trend positive">+8 este mes</p>
+          <p class="stat-number">24</p>
+          <p class="stat-trend positive">+5 este mes</p>
         </div>
         
         <div class="stat-card">
           <h3>Paquetes Activos</h3>
-          <p class="stat-number">27</p>
+          <p class="stat-number">18</p>
+          <p class="stat-trend positive">+7 este mes</p>
+        </div>
+        
+        <div class="stat-card">
+          <h3>Paquetes Entregados</h3>
+          <p class="stat-number">42</p>
           <p class="stat-trend positive">+12 este mes</p>
         </div>
       </div>
@@ -58,7 +63,7 @@
         <div class="activity-list">
           <div class="activity-item">
             <span class="activity-time">Hoy, 10:30</span>
-            <p>Nueva empresa registrada: <strong>Acme Inc.</strong></p>
+            <p>Nuevo paquete registrado: <strong>PKG-AB123-2025</strong></p>
           </div>
           <div class="activity-item">
             <span class="activity-time">Hoy, 09:15</span>
@@ -66,11 +71,11 @@
           </div>
           <div class="activity-item">
             <span class="activity-time">Ayer, 15:45</span>
-            <p>Empresa actualizada: <strong>Tech Solutions</strong></p>
+            <p>Paquete recogido: <strong>PKG-XY789-2025</strong></p>
           </div>
           <div class="activity-item">
             <span class="activity-time">10/04/2025, 09:15</span>
-            <p>Paquete entregado: <strong>PKG-45XA2</strong></p>
+            <p>Paquete entregado: <strong>PKG-45XA2-2025</strong></p>
           </div>
         </div>
       </div>

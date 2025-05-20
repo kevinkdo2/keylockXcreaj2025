@@ -1,0 +1,155 @@
+<!-- views/empresa/usuarios.ejs -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestión de Usuarios | Mi Aplicación</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/dashboard.css">
+  <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+  <%- include('../partials/header') %>
+
+  <main class="container admin-container">
+    <div class="admin-header">
+      <h1>Gestión de Usuarios</h1>
+      <p>Administra los usuarios de tu empresa</p>
+    </div>
+
+    <div class="admin-menu">
+      <a href="/empresa/dashboard" class="admin-menu-item">
+        <span class="icon">📊</span>
+        <span>Dashboard</span>
+      </a>
+      <a href="/empresa/usuarios" class="admin-menu-item active">
+        <span class="icon">👤</span>
+        <span>Usuarios</span>
+      </a>
+      <a href="/empresa/paquetes" class="admin-menu-item">
+        <span class="icon">📦</span>
+        <span>Paquetes</span>
+      </a>
+      <a href="/empresa/settings" class="admin-menu-item">
+        <span class="icon">⚙️</span>
+        <span>Configuración</span>
+      </a>
+    </div>
+
+    <div class="admin-content">
+      <div class="table-actions">
+        <div class="search-box">
+          <input type="text" id="searchUsuario" placeholder="Buscar usuario...">
+          <button class="search-button">🔍</button>
+        </div>
+        <a href="/empresa/usuarios/create" class="btn btn-primary">
+          <span class="icon">+</span> Nuevo Usuario
+        </a>
+      </div>
+
+      <div class="table-container">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nombre</th>
+              <th>Correo</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% if (usuarios && usuarios.length > 0) { %>
+              <% usuarios.forEach(usuario => { %>
+                <tr>
+                  <td><%= usuario.id %></td>
+                  <td><%= usuario.nombre %></td>
+                  <td><%= usuario.correo %></td>
+                  <td class="actions">
+                    <a href="/empresa/usuarios/edit/<%= usuario.id %>" class="btn-action edit" title="Editar">
+                      ✏️
+                    </a>
+                    <a href="#" onclick="confirmDelete('<%= usuario.id %>', '<%= usuario.nombre %>')" class="btn-action delete" title="Eliminar">
+                      🗑️
+                    </a>
+                  </td>
+                </tr>
+              <% }); %>
+            <% } else { %>
+              <tr>
+                <td colspan="4" class="no-data">No hay usuarios registrados</td>
+              </tr>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="pagination">
+        <button class="btn-page" disabled>&laquo; Anterior</button>
+        <span class="page-info">Página 1 de 1</span>
+        <button class="btn-page" disabled>Siguiente &raquo;</button>
+      </div>
+    </div>
+  </main>
+
+  <!-- Modal para confirmar eliminación -->
+  <div id="deleteModal" class="modal">
+    <div class="modal-content">
+      <h2>Confirmar Eliminación</h2>
+      <p>¿Estás seguro de que deseas eliminar al usuario <span id="deleteUsuarioName"></span>?</p>
+      <p class="warning">Esta acción no se puede deshacer.</p>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" onclick="closeModal()">Cancelar</button>
+        <a href="#" id="confirmDeleteBtn" class="btn btn-danger">Eliminar</a>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 Mi Aplicación - Todos los derechos reservados</p>
+  </footer>
+
+  <script>
+    // Filtrar usuarios al escribir en el buscador
+    document.getElementById('searchUsuario').addEventListener('keyup', function() {
+      const searchTerm = this.value.toLowerCase();
+      const rows = document.querySelectorAll('tbody tr');
+      
+      rows.forEach(row => {
+        const nombre = row.cells[1].textContent.toLowerCase();
+        const correo = row.cells[2].textContent.toLowerCase();
+        
+        if (nombre.includes(searchTerm) || correo.includes(searchTerm)) {
+          row.style.display = '';
+        } else {
+          row.style.display = 'none';
+        }
+      });
+    });
+    
+    // Funciones para el modal de confirmación de eliminación
+    function confirmDelete(id, nombre) {
+      const modal = document.getElementById('deleteModal');
+      const nameSpan = document.getElementById('deleteUsuarioName');
+      const confirmBtn = document.getElementById('confirmDeleteBtn');
+      
+      nameSpan.textContent = nombre;
+      confirmBtn.href = `/empresa/usuarios/delete/${id}`;
+      modal.style.display = 'flex';
+    }
+    
+    function closeModal() {
+      const modal = document.getElementById('deleteModal');
+      modal.style.display = 'none';
+    }
+    
+    // Cerrar modal si se hace clic fuera
+    window.onclick = function(event) {
+      const modal = document.getElementById('deleteModal');
+      if (event.target === modal) {
+        closeModal();
+      }
+    }
+  </script>
+</body>
+</html>

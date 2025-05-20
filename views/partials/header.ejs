@@ -1,5 +1,3 @@
-<!-- views/partials/header.ejs (actualizado) -->
-
 <header class="main-header">
   <div class="container">
     <div class="logo">
@@ -13,7 +11,7 @@
         
         <% if (user) { %>
           <% if (user.isAdmin) { %>
-            <!-- Menú de navegación especial para administradores -->
+            <!-- Menú de navegación para administradores -->
             <li class="nav-item dropdown">
               <a href="#" class="nav-link dropdown-toggle">
                 <span class="icon">🔧</span> Administración
@@ -22,21 +20,28 @@
                 <a href="/admin/dashboard">Dashboard</a>
                 <a href="/admin/empresas">Gestión de Empresas</a>
                 <a href="/admin/usuarios">Gestión de Usuarios</a>
-                <a href="/admin/paquetes">Gestión de Paquetes</a>
               </div>
             </li>
-            <!-- Enlace al área de usuario normal -->
-            <li><a href="/dashboard">Ver Área de Usuario</a></li>
-          <% } else { %>
-            <li><a href="/dashboard">Dashboard</a></li>
-            <li><a href="/admin/usuarios">Mis Usuarios</a></li>
-            <li><a href="/admin/paquetes">Mis Paquetes</a></li>
+          <% } else if (user.isEmpresa) { %>
+            <!-- Menú de navegación para empresas -->
+            <li class="nav-item dropdown">
+              <a href="#" class="nav-link dropdown-toggle">
+                <span class="icon">🏢</span> Mi Empresa
+              </a>
+              <div class="dropdown-menu">
+                <a href="/empresa/dashboard">Dashboard</a>
+                <a href="/empresa/usuarios">Mis Usuarios</a>
+                <a href="/empresa/paquetes">Mis Paquetes</a>
+              </div>
+            </li>
           <% } %>
           
           <li class="user-info">
             <span class="user-name">
               <% if (user.isAdmin) { %>
                 <span class="admin-badge">Admin</span>
+              <% } else if (user.isEmpresa) { %>
+                <span class="admin-badge" style="background-color: #2563eb;">Empresa</span>
               <% } %>
               <%= user.nombre %>
             </span>

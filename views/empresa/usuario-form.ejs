@@ -1,0 +1,105 @@
+<!-- views/empresa/usuario-form.ejs -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %> | Mi Aplicación</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/dashboard.css">
+  <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+  <%- include('../partials/header') %>
+
+  <main class="container admin-container">
+    <div class="admin-header">
+      <h1><%= title %></h1>
+      <p>Ingresa los datos del usuario</p>
+    </div>
+
+    <div class="admin-menu">
+      <a href="/empresa/dashboard" class="admin-menu-item">
+        <span class="icon">📊</span>
+        <span>Dashboard</span>
+      </a>
+      <a href="/empresa/usuarios" class="admin-menu-item active">
+        <span class="icon">👤</span>
+        <span>Usuarios</span>
+      </a>
+      <a href="/empresa/paquetes" class="admin-menu-item">
+        <span class="icon">📦</span>
+        <span>Paquetes</span>
+      </a>
+      <a href="/empresa/settings" class="admin-menu-item">
+        <span class="icon">⚙️</span>
+        <span>Configuración</span>
+      </a>
+    </div>
+
+    <div class="admin-content">
+      <div class="form-container">
+        <form action="<%= action %>" method="POST" class="admin-form">
+          <div class="form-group">
+            <label for="nombre">Nombre del Usuario</label>
+            <input 
+              type="text" 
+              id="nombre" 
+              name="nombre" 
+              placeholder="Nombre completo"
+              value="<%= usuario.nombre || '' %>"
+              required
+            >
+            <% if (typeof errors !== 'undefined' && errors.find(e => e.param === 'nombre')) { %>
+              <span class="error-message"><%= errors.find(e => e.param === 'nombre').msg %></span>
+            <% } %>
+          </div>
+          
+          <div class="form-group">
+            <label for="correo">Correo Electrónico</label>
+            <input 
+              type="email" 
+              id="correo" 
+              name="correo" 
+              placeholder="correo@ejemplo.com"
+              value="<%= usuario.correo || '' %>"
+              required
+            >
+            <% if (typeof errors !== 'undefined' && errors.find(e => e.param === 'correo')) { %>
+              <span class="error-message"><%= errors.find(e => e.param === 'correo').msg %></span>
+            <% } %>
+          </div>
+          
+          <div class="form-group">
+            <label for="contrasena">
+              Contraseña
+              <% if (usuario.id) { %>
+                <small>(Dejar en blanco para mantener la actual)</small>
+              <% } %>
+            </label>
+            <input 
+              type="password" 
+              id="contrasena" 
+              name="contrasena" 
+              placeholder="<%= usuario.id ? 'Nueva contraseña (opcional)' : 'Contraseña' %>"
+              <%= !usuario.id ? 'required' : '' %>
+            >
+            <% if (typeof errors !== 'undefined' && errors.find(e => e.param === 'contrasena')) { %>
+              <span class="error-message"><%= errors.find(e => e.param === 'contrasena').msg %></span>
+            <% } %>
+          </div>
+          
+          <div class="form-actions">
+            <a href="/empresa/usuarios" class="btn btn-secondary">Cancelar</a>
+            <button type="submit" class="btn btn-primary">Guardar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Mi Aplicación - Todos los derechos reservados</p>
+  </footer>
+</body>
+</html>

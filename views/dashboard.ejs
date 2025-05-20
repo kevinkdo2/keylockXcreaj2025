@@ -1,4 +1,4 @@
-<!-- views/dashboard.ejs (actualizado) -->
+<!-- views/dashboard.ejs (corregido para evitar redirecciones innecesarias) -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -14,31 +14,45 @@
   <main class="container dashboard-container">
     <div class="dashboard-header">
       <h1>Bienvenido, <%= user.nombre %></h1>
-      <p><%= user.isAdmin ? 'Panel de Administración' : 'Panel de Control de tu Empresa' %></p>
+      <p><%= user.isAdmin ? 'Panel de Administración' : (user.isEmpresa ? 'Panel de Empresa' : 'Panel de Usuario') %></p>
     </div>
 
     <div class="dashboard-cards">
-      <% if (user.isAdmin || user.isEmpresa) { %>
-        <div class="card">
-          <h3>Gestión de Paquetes</h3>
-          <p>Registra y gestiona los paquetes de los usuarios</p>
-          <a href="/admin/paquetes" class="btn btn-primary">Gestionar Paquetes</a>
-        </div>
-      <% } %>
-
-      <% if (user.isAdmin || user.isEmpresa) { %>
-        <div class="card">
-          <h3>Gestión de Usuarios</h3>
-          <p>Administra los usuarios de la plataforma</p>
-          <a href="/admin/usuarios" class="btn btn-primary">Gestionar Usuarios</a>
-        </div>
-      <% } %>
-
       <% if (user.isAdmin) { %>
         <div class="card">
           <h3>Gestión de Empresas</h3>
           <p>Administra las empresas registradas</p>
           <a href="/admin/empresas" class="btn btn-primary">Gestionar Empresas</a>
+        </div>
+        
+        <div class="card">
+          <h3>Gestión de Usuarios</h3>
+          <p>Administra los usuarios del sistema</p>
+          <a href="/admin/usuarios" class="btn btn-primary">Gestionar Usuarios</a>
+        </div>
+        
+        <div class="card">
+          <h3>Panel de Administración</h3>
+          <p>Accede a tu panel principal</p>
+          <a href="/admin/dashboard" class="btn btn-primary">Ir al Panel</a>
+        </div>
+      <% } else if (user.isEmpresa) { %>
+        <div class="card">
+          <h3>Gestión de Paquetes</h3>
+          <p>Registra y gestiona los paquetes de tus usuarios</p>
+          <a href="/empresa/paquetes" class="btn btn-primary">Gestionar Paquetes</a>
+        </div>
+        
+        <div class="card">
+          <h3>Gestión de Usuarios</h3>
+          <p>Administra los usuarios de tu empresa</p>
+          <a href="/empresa/usuarios" class="btn btn-primary">Gestionar Usuarios</a>
+        </div>
+        
+        <div class="card">
+          <h3>Panel de Empresa</h3>
+          <p>Accede a tu panel principal</p>
+          <a href="/empresa/dashboard" class="btn btn-primary">Ir al Panel</a>
         </div>
       <% } %>
       
