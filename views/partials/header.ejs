@@ -3,12 +3,12 @@
     <div class="logo">
       <a href="/">Mi Aplicación</a>
     </div>
-    
+
     <nav class="main-nav">
       <ul>
         <li><a href="/">Inicio</a></li>
         <li><a href="/info">Info</a></li>
-        
+
         <% if (user) { %>
           <% if (user.isAdmin) { %>
             <!-- Menú de navegación para administradores -->
@@ -35,7 +35,7 @@
               </div>
             </li>
           <% } %>
-          
+
           <li class="user-info">
             <span class="user-name">
               <% if (user.isAdmin) { %>
@@ -53,37 +53,36 @@
           </li>
           <li><a href="/dashboard" class="hover:text-gray-800 transition">Ver Área de Usuario</a></li>
         <% } else { %>
-          <li><a href="/dashboard" class="hover:text-gray-800 transition">Dashboard</a></li>
-          <li><a href="/admin/usuarios" class="hover:text-gray-800 transition">Mis Usuarios</a></li>
-          <li><a href="/admin/paquetes" class="hover:text-gray-800 transition">Mis Paquetes</a></li>
+          <!-- Si no hay usuario autenticado -->
+          <li><a href="/login" class="hover:text-gray-800 transition">Iniciar Sesión</a></li>
+          <li><a href="/register" class="hover:text-gray-800 transition">Registrarse</a></li>
         <% } %>
-      <% } else { %>
-        <li><a href="/login" class="hover:text-gray-800 transition">Iniciar Sesión</a></li>
-      <% } %>
-    </ul>
-  </nav>
+      </ul>
+    </nav>
 
-  <!-- Lado derecho: botón o nombre -->
-  <div class="flex items-center space-x-4">
-    <% if (user) { %>
-      <div class="relative group text-gray-700">
-        <span class="cursor-pointer hover:text-gray-800 transition">
-          <% if (user.isAdmin) { %>
-            <span class="bg-gray-200 text-xs px-2 py-1 rounded-full mr-2">Admin</span>
-          <% } %>
-          <%= user.nombre %>
-        </span>
-        <div class="absolute right-0 mt-2 hidden group-hover:block bg-white border rounded shadow-md z-50 min-w-[160px]">
-          <a href="/profile" class="block px-4 py-2 text-sm hover:bg-gray-100">Perfil</a>
-          <a href="/settings" class="block px-4 py-2 text-sm hover:bg-gray-100">Configuración</a>
-          <a href="/logout" class="block px-4 py-2 text-sm hover:bg-gray-100">Cerrar Sesión</a>
+    <!-- Lado derecho: botón o nombre -->
+    <div class="flex items-center space-x-4">
+      <% if (user) { %>
+        <div class="relative group text-gray-700">
+          <span class="cursor-pointer hover:text-gray-800 transition">
+            <% if (user.isAdmin) { %>
+              <span class="bg-gray-200 text-xs px-2 py-1 rounded-full mr-2">Admin</span>
+            <% } %>
+            <%= user.nombre %>
+          </span>
+          <div class="absolute right-0 mt-2 hidden group-hover:block bg-white border rounded shadow-md z-50 min-w-[160px]">
+            <a href="/profile" class="block px-4 py-2 text-sm hover:bg-gray-100">Perfil</a>
+            <a href="/settings" class="block px-4 py-2 text-sm hover:bg-gray-100">Configuración</a>
+            <a href="/logout" class="block px-4 py-2 text-sm hover:bg-gray-100">Cerrar Sesión</a>
+          </div>
         </div>
-      </div>
-    <% } else { %>
-      <a href="/register"
-        class="border border-gray-300 text-gray-700 font-medium rounded-full px-5 py-2 hover:bg-gray-50 transition">
-        Registrarse
-      </a>
-    <% } %>
+      <% } else { %>
+        <a href="/register"
+          class="border border-gray-300 text-gray-700 font-medium rounded-full px-5 py-2 hover:bg-gray-50 transition">
+          Registrarse
+        </a>
+      <% } %>
+    </div>
   </div>
 </header>
+
